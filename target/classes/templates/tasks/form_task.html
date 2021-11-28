@@ -1,0 +1,44 @@
+<!--DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+<head>
+    <title>FORM TASK</title>
+</head>
+<body>
+    <div layout:fragment="content"
+         class="container">
+        <form id="TaskForm"
+              th:action="@{/(form)}"
+              th:object="${project}"
+              action="#"
+              method="post">
+            <div th:if="${#fields.hasErrors('*')}"
+                 class="alert alert-error">
+                <p th:each="error : ${#fields.errors('*')}"
+                   th:text="${error}">
+                    Validation error
+                </p>
+            </div>
+            <div class="pull-right">
+                <a th:href="@{/form}" href="tasks.html">
+                    Your Task
+                </a>
+            </div>
+            <label for="taskName">Task name</label>
+            <input type="text"
+                   th:field="*{taskName}"
+                   th:class="${#fields.hasErrors('tasksName')} ? 'field-error'"/>
+            <label for="taskDescription">Description task</label>
+            <textarea
+                th:field="*{taskDescription}"
+                th:class="${#fields.hasErrors('taskDescription')} ? 'field-error'"></textarea>
+            <div class="form-actions">
+                <input type="submit" value="ADD TASK"/>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+
