@@ -16,6 +16,12 @@
 
 package application.ui;
 
+import application.ui.entity.Project;
+import application.ui.entity.Task;
+import application.ui.repository.ProjectRepository;
+import application.ui.repository.TaskRepository;
+import application.ui.service.ProjectService;
+import application.ui.service.TaskService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -29,16 +35,31 @@ import org.springframework.core.convert.converter.Converter;
 public class SampleWebUiApplication {
 
 	@Bean
-	public MessageRepository messageRepository() {
-		return new InMemoryMessageRespository();
+	public ProjectRepository projectRepository() {
+		return new ProjectService();
 	}
 
 	@Bean
-	public Converter<String, Message> messageConverter() {
-		return new Converter<String, Message>() {
+	public TaskRepository taskRepository() {
+		return new TaskService();
+	}
+
+	@Bean
+	public Converter<String, Project> projectConverter() {
+		return new Converter<String, Project>() {
 			@Override
-			public Message convert(String id) {
-				return messageRepository().findMessage(Long.valueOf(id));
+			public Project convert(String id) {
+				return projectRepository().findProject(Integer.valueOf(id));
+			}
+		};
+	}
+
+	@Bean
+	public Converter<String, Task> taskConverter() {
+		return new Converter<String, Task>() {
+			@Override
+			public Task convert(String id) {
+				return taskRepository().findTask(Integer.valueOf(id));
 			}
 		};
 	}
