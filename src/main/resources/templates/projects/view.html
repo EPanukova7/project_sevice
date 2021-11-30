@@ -1,34 +1,39 @@
 <html xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
-  layout:decorator="layout">
-  <head>
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
     <title>Tasks : View</title>
-  </head>
-  <body>
-    <div layout:fragment="content"
-        class="container">
-      <div class="alert alert-success"
-          th:if="${globalProject}"
-          th:text="${globalProject}">
+</head>
+<body>
+<div layout:fragment="content"
+     class="container">
+    <div class="alert alert-success"
+         th:if="${globalProject}"
+         th:text="${globalProject}">
         Some Projects
-      </div>
-      <dl>
+    </div>
+    <dl>
         <dt>ID</dt>
         <dd id="id" th:text="${project.id}">123</dd>
         <dt>Project name</dt>
         <dd id="projectName" th:text="${project.projectName}">0</dd>
         <dl>
-          <div>
-            <h2>Create your tasks</h2>
-              <div>
-                <h2>
-                <label for="projectName">
-                <input type="checkbox"/> Name of Task</label>
-                </h2>
-              </div>
-          </div>
+            <div>
+                <h2>Create your tasks</h2>
+                <form th:action="'/project/' + ${project.id} + '/create'" target="_blank">
+                    <button>Добавить новую задачу</button>
+                </form>
+                <ul>
+                    <li th:if="${tasks.empty}">
+                        You haven't created a task yet
+                    </li>
+                    <li th:each="task : ${tasks}"
+                        th:text="${task.id} + ' ' + ${task.title}">1
+                    </li>
+                </ul>
+            </div>
         </dl>
-      </dl>
-    </div>
-  </body>
+    </dl>
+</div>
+</body>
 </html>
