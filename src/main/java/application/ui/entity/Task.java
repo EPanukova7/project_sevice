@@ -16,22 +16,22 @@ public class Task {
     @Setter
     @GeneratedValue
     @Id
-    private Integer taskId;
+    private Integer id;
 
     @Getter
     @Setter
     @NotEmpty(message = "Task is required.")
-    private String taskName;
+    private String title;
 
     @Getter
     @Setter
     @NotEmpty(message = "Description is required.")
-    private String taskDescription;
+    private String description;
 
     @Getter
     @Setter
     @NotEmpty(message = "State is required.")
-    private Boolean taskState;
+    private Boolean state;
 
     @Getter
     @Setter
