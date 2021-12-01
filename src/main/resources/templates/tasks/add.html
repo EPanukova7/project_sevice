@@ -3,7 +3,6 @@
       layout:decorator="layout">
 <head>
     <title>Tasks : Add</title>
-
 </head>
 <body>
 <div layout:fragment="content"
@@ -18,31 +17,31 @@
           th:action="'/project/' + ${project.id} + '/create'"
           th:object="${task}"
           action="#"
-          method="get">
+          method="post">
         <div th:if="${#fields.hasErrors('*')}"
-             class="alert alert-error" th:each="error : ${#fields.errors('*')}"
+             class="alert alert-error">
+            <p th:each="error : ${#fields.errors('*')}"
                th:text="${error}">
                 Validation error
+            </p>
         </div>
         <div>
-            <label for="taskName">Название задачи:</label>
+            <label for="title">Название задачи:</label>
             <input type="text"
-                   th:field="*{taskName}"
-                   th:class="${#fields.hasErrors('taskName')} ? 'field-error'"/>
+                   th:field="*{title}"
+                   th:class="${#fields.hasErrors('title')} ? 'field-error'"/>
         </div>
         <div>
-            <label for="taskDescription">Описание:</label>
+            <label for="description">Описание:</label>
             <textarea
-                    th:field="*{taskDescription}"
-                    th:class="${#fields.hasErrors('taskDescription')} ? 'field-error'"></textarea>
-            <label for="projectId"> id project: </label>
+                    th:field="*{description}"
+                    th:class="${#fields.hasErrors('description')} ? 'field-error'"/>
+
             <dd th:field="*{projectId}"
                 th:class="${#fields.hasErrors('projectId')} ? 'field-error'"
-                th:value="${project.id}"></dd>
+                th:value="${project.id}"/>
         </div>
-        <div class="form-actions">
-            <input type="submit" value="CREATE"/>
-        </div>
+        <input type="submit" value="Сохранить"/>
     </form>
     <form th:action="'/project/' + ${project.id}">
         <button>Назад</button>

@@ -1,31 +1,24 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
-  <head>
-    <title>Layout</title>
-    <!--meta http-equiv="Content-Type" content="text/html" charset="UTF-8"-->
-    <link rel="stylesheet"
-      th:href="@{/css/bootstrap.min.css}"
-      href="../../css/bootstrap.min.css"/>
-  </head>
-  <body>
-    <div class="container">
-      <div class="navbar">
-        <div class="navbar-inner">
-          <!--a class="brand" href="https://github.com/ultraq/thymeleaf-layout-dialect"-->
-              <a class="brand">TeamworkService</a>
-          <ul class="brand" >
-            <li>
-              <a th:href="@{/}">
-                ALL PROJECTS
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <h1 layout:fragment="header">Layout</h1>
-      <div layout:fragment="content">
-        Fake content
-      </div>
+<head>
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../../css/bootstrap.min.css"/>
+  <title>LayOut</title>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="navbar" style="display: flex; justify-content: space-between; background">
+      <a class="brand">Сервис для командной работы</a>
+      <ul class="brand">
+        <a th:href="@{/}" href="projects.html">
+          Мои проекты
+        </a>
+      </ul>
     </div>
-  </body>
+  </header>
+  <div layout:fragment="content">
+    Fake content
+  </div>
+</div>
+</body>
 </html>

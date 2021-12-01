@@ -3,26 +3,18 @@
       layout:decorator="layout">
 <head>
     <title>Tasks : View</title>
-
 </head>
 <body>
 <div layout:fragment="content"
-     class="container">
-    <div class="alert alert-success"
-         th:if="${globalProject}"
-         th:text="${globalProject}">
-        Some Projects
-    </div>
-    <dl>
-        <dt>ID</dt>
-        <dd id="id" th:text="${project.id}">123</dd>
-        <dt>Project name</dt>
+     class="containerrr">
+
+    <dl style="font-size: 24px">
+        <dt>Название проекта:</dt>
         <dd id="projectName" th:text="${project.projectName}">0</dd>
         <dl>
             <div>
-                <h2>Create your tasks</h2>
                 <form th:action="'/project/' + ${project.id} + '/create'" target="_blank">
-                    <button>Добавить новую задачу</button>
+                    <button>Создать новую задачу</button>
                 </form>
                 <ul>
                     <li th:if="${tasks.empty}" th:each="task : ${tasks}">
