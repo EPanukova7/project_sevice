@@ -29,12 +29,8 @@
         </div>
     </form>
     <div>
-
         <ul>
-            <li th:if="${projects.empty}">
-                You haven't created a project yet
-            </li>
-            <li th:each="project : ${projects}">
+            <li th:if="${projects.empty}" th:each="project : ${projects}">
                 <a th:href="@{project/__${project.id}__}">
                     <p th:text="${project.projectName}"></p>
                 </a>

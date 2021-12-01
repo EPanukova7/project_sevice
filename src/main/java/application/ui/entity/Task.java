@@ -4,34 +4,34 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Task {
 
     @Getter
     @Setter
-    @GeneratedValue
+    @GeneratedValue(strategy= GenerationType.AUTO)
     @Id
     private Integer id;
 
     @Getter
     @Setter
+    @Size(min=4, message = "{Size.Task.TaskName}")
     @NotEmpty(message = "Task is required.")
-    private String title;
+    private String taskName;
 
     @Getter
     @Setter
+    @Size(min=1, message = "{Size.Task.TaskDescription}")
     @NotEmpty(message = "Description is required.")
-    private String description;
+    private String taskDescription;
 
     @Getter
     @Setter
     @NotEmpty(message = "State is required.")
-    private Boolean state;
+    private Boolean taskState;
 
     @Getter
     @Setter

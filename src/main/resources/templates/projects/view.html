@@ -3,6 +3,7 @@
       layout:decorator="layout">
 <head>
     <title>Tasks : View</title>
+
 </head>
 <body>
 <div layout:fragment="content"
@@ -24,11 +25,10 @@
                     <button>Добавить новую задачу</button>
                 </form>
                 <ul>
-                    <li th:if="${tasks.empty}">
-                        You haven't created a task yet
-                    </li>
-                    <li th:each="task : ${tasks}"
-                        th:text="${task.id} + ' ' + ${task.title}">1
+                    <li th:if="${tasks.empty}" th:each="task : ${tasks}">
+                        <a th:href="@{project/__${project.id}__}">
+                            <p th:text="${task.taskName}"></p>
+                        </a>
                     </li>
                 </ul>
             </div>

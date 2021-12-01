@@ -3,6 +3,7 @@
       layout:decorator="layout">
 <head>
     <title>Tasks : Add</title>
+
 </head>
 <body>
 <div layout:fragment="content"
@@ -17,31 +18,31 @@
           th:action="'/project/' + ${project.id} + '/create'"
           th:object="${task}"
           action="#"
-          method="post">
+          method="get">
         <div th:if="${#fields.hasErrors('*')}"
-             class="alert alert-error">
-            <p th:each="error : ${#fields.errors('*')}"
+             class="alert alert-error" th:each="error : ${#fields.errors('*')}"
                th:text="${error}">
                 Validation error
-            </p>
         </div>
         <div>
-            <label for="title">Название задачи:</label>
+            <label for="taskName">Название задачи:</label>
             <input type="text"
-                   th:field="*{title}"
-                   th:class="${#fields.hasErrors('title')} ? 'field-error'"/>
+                   th:field="*{taskName}"
+                   th:class="${#fields.hasErrors('taskName')} ? 'field-error'"/>
         </div>
         <div>
-            <label for="description">Описание:</label>
+            <label for="taskDescription">Описание:</label>
             <textarea
-                    th:field="*{description}"
-                    th:class="${#fields.hasErrors('description')} ? 'field-error'"/>
-            <label for="projectId"> id proekta: </label>
+                    th:field="*{taskDescription}"
+                    th:class="${#fields.hasErrors('taskDescription')} ? 'field-error'"></textarea>
+            <label for="projectId"> id project: </label>
             <dd th:field="*{projectId}"
                 th:class="${#fields.hasErrors('projectId')} ? 'field-error'"
-                th:value="${project.id}"/>
+                th:value="${project.id}"></dd>
         </div>
-        <input type="submit" value="Сохранить"/>
+        <div class="form-actions">
+            <input type="submit" value="CREATE"/>
+        </div>
     </form>
     <form th:action="'/project/' + ${project.id}">
         <button>Назад</button>
