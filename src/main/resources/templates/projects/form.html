@@ -4,41 +4,49 @@
       layout:decorator="layout">
 <head>
     <title>Projects : Create</title>
+    <script src="https://use.fontawesome.com/6860501a81.js"></script>
 </head>
 <body>
-<div layout:fragment="content"
-     class="container">
+<div layout:fragment="content" class="containerr" style="display: inline-block">
     <form id="projectForm"
           th:action="@{/}"
           th:object="${project}"
           action="#"
           method="post">
         <div th:if="${#fields.hasErrors('*')}"
-             class="alert alert-error">
+             class="alert alert-errorrr">
             <p th:each="error : ${#fields.errors('*')}"
                th:text="${error}">
                 Validation error
             </p>
         </div>
-        <label for="projectName">Name of project</label>
-        <input type="text"
-               th:field="*{projectName}"
-               th:class="${#fields.hasErrors('projectName')} ? 'field-error'"/>
-        <div class="form-actions">
-            <input type="submit" value="CREATE"/>
+
+        <div class="plus" style="display: flex; justify-content: flex-start; font-size: 24px; padding-left: 5%; margin: auto">
+            <i class="fa fa-plus-circle" aria-hidden="true" ></i>
+            <input  type="text"
+                             th:field="*{projectName}"
+                             th:class="${#fields.hasErrors('projectName')} ? 'field-error'"/>
+            <div>
+                <button style="padding-left: 5%"  type="submit">Создать новый проект</button>
+            </div>
         </div>
+
     </form>
-    <div>
+    <div style="font-size: 24px">
 
         <ul>
-            <li th:if="${projects.empty}">
-                You haven't created a project yet
-            </li>
-            <li th:each="project : ${projects}">
-                <a th:href="@{project/__${project.id}__}">
-                    <p th:text="${project.projectName}"></p>
-                </a>
-            </li>
+            <p th:if="${projects.empty}" style="">
+                У вас пока нет проектов
+            </p>
+            <p th:each="project : ${projects}">
+                <div class="ic" style="display: flex; justify-content: flex-start">
+                    <i class="fa fa-file-text" aria-hidden="true"></i>
+                    <a th:href="@{project/__${project.id}__}">
+                        <p style="padding-right: 2%" th:text="${project.projectName}"></p>
+                    </a>
+                </div>
+
+            </p>
         </ul>
     </div>
 </div>
