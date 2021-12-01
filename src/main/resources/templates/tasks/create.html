@@ -7,15 +7,15 @@
 <body>
 <div layout:fragment="content"
      class="container">
-    <div class="alert alert-success"
-         th:if="${globalProject}"
-         th:text="${globalProject}">
-        Some Projects
-    </div>
+<!--    <div class="alert alert-success"-->
+<!--         th:if="${globalProject}"-->
+<!--         th:text="${globalProject}">-->
+<!--        Some Projects-->
+<!--    </div>-->
 
     <form id="taskForm"
-          th:action="'/project/' + ${project.id} + '/create'"
-          th:object="${task}"
+          th:action="@{/__${project.id}__}"
+          th:object="${project}"
           action="#"
           method="post">
         <div th:if="${#fields.hasErrors('*')}"
@@ -43,7 +43,7 @@
         </div>
         <input type="submit" value="Сохранить"/>
     </form>
-    <form th:action="'/project/' + ${project.id}">
+    <form th:action="@{/__${project.id}__}">
         <button>Назад</button>
     </form>
 </div>

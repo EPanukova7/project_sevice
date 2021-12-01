@@ -10,7 +10,7 @@
     <div layout:fragment="content"
          class="container">
         <form id="TaskForm"
-              th:action="'/' + ${project.id} + '/' + (form)}"
+              th:action="${project.id} + '/' + (form)}"
               th:object="${project}"
               action="#"
               method="post">

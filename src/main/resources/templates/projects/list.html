@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" xmlns:p="http://www.w3.org/1999/XSL/Transform"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:p="http://www.w3.org/1999/XSL/Transform"
       layout:decorator="layout">
 <head>
     <title>Projects : Create</title>
@@ -11,7 +12,6 @@
     <form id="projectForm"
           th:action="@{/}"
           th:object="${project}"
-          action="#"
           method="post">
         <div th:if="${#fields.hasErrors('*')}"
              class="alert alert-error">
@@ -35,7 +35,7 @@
                 You haven't created a project yet
             </li>
             <li th:each="project : ${projects}">
-                <a th:href="@{project/__${project.id}__}">
+                <a th:href="@{/__${project.id}__}">
                     <p th:text="${project.projectName}"></p>
                 </a>
             </li>

@@ -20,15 +20,16 @@
         <dl>
             <div>
                 <h2>Create your tasks</h2>
-                <form th:action="'/project/' + ${project.id} + '/create'" target="_blank">
+                <form th:action="@{/__${project.id}__/create_task}" target="_blank">
                     <button>Добавить новую задачу</button>
                 </form>
+
                 <ul>
                     <li th:if="${tasks.empty}">
                         You haven't created a task yet
                     </li>
                     <li th:each="task : ${tasks}"
-                        th:text="${task.id} + ' ' + ${task.title}">1
+                        th:text="${task.id} + ' ' + ${task.taskName} + ' ' + ${task.state}">
                     </li>
                 </ul>
             </div>

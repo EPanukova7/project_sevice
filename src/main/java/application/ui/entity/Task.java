@@ -2,26 +2,23 @@ package application.ui.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 public class Task {
 
+    @Id
     @Getter
     @Setter
-    @GeneratedValue
-    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
 
     @Getter
     @Setter
     @NotEmpty(message = "Task is required.")
-    private String title;
+    private String taskName;
 
     @Getter
     @Setter
@@ -34,8 +31,9 @@ public class Task {
     private Boolean state;
 
     @Getter
-    @Setter
     @NotEmpty
-    private Integer projectId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "project_id")
+    private Project project;
 
 }
