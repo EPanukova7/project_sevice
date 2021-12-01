@@ -36,7 +36,7 @@
             <textarea
                     th:field="*{description}"
                     th:class="${#fields.hasErrors('description')} ? 'field-error'"/>
-            <label for="projectId"> id proekta: </label>
+
             <dd th:field="*{projectId}"
                 th:class="${#fields.hasErrors('projectId')} ? 'field-error'"
                 th:value="${project.id}"/>
