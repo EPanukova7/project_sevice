@@ -6,21 +6,30 @@
 </head>
 <body>
 <div layout:fragment="content"
-     class="containerrr">
-
-    <dl style="font-size: 24px">
-        <dt>Название проекта:</dt>
-        <dd id="projectName" th:text="${project.projectName}">0</dd>
+     class="container">
+    <div class="alert alert-success"
+         th:if="${globalProject}"
+         th:text="${globalProject}">
+        Some Projects
+    </div>
+    <dl>
+        <dt>ID</dt>
+        <dd id="id" th:text="${project.id}">123</dd>
+        <dt>Project name</dt>
+        <dd id="name" th:text="${project.name}">0</dd>
         <dl>
             <div>
-                <form th:action="'/project/' + ${project.id} + '/create'" target="_blank">
-                    <button>Создать новую задачу</button>
+                <h2>Create your tasks</h2>
+                <form th:action="@{/projects/__${project.id}__/tasks/create}" target="_blank">
+                    <button>Добавить новую задачу</button>
                 </form>
+
                 <ul>
-                    <li th:if="${tasks.empty}" th:each="task : ${tasks}">
-                        <a th:href="@{project/__${project.id}__}">
-                            <p th:text="${task.taskName}"></p>
-                        </a>
+                    <li th:if="${tasks.empty}">
+                        You haven't created a task yet
+                    </li>
+                    <li th:each="task : ${tasks}"
+                        th:text="${task.name} + ' ' + ${task.description} + ' ' + ${task.state}">
                     </li>
                 </ul>
             </div>

@@ -1,13 +1,9 @@
 package application.ui.repository;
 
+import org.springframework.data.repository.CrudRepository;
+
 import application.ui.entity.Project;
 
-public interface ProjectRepository {
-
-    Iterable<Project> findAll();
-
-    Project save(Project project);
-
-    Project findProject(Integer id);
+public interface ProjectRepository extends CrudRepository<Project, Integer>{
 
 }
