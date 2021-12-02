@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:p="http://www.w3.org/1999/XSL/Transform"
+      layout:decorator="layout">
+<head>
+    <title>Projects : Create</title>
+</head>
+<body>
+<div layout:fragment="content"
+     class="container">
+    <form id="projectForm"
+          th:action="@{/projects}"
+          th:object="${project}"
+          method="post">
+        <div th:if="${#fields.hasErrors('*')}"
+             class="alert alert-error">
+            <p th:each="error : ${#fields.errors('*')}"
+               th:text="${error}">
+                Validation error
+            </p>
+        </div>
+        <label for="name">Name of project</label>
+        <input type="text"
+               th:field="*{name}"
+               th:class="${#fields.hasErrors('name')} ? 'field-error'"/>
+        <div class="form-actions">
+            <input type="submit" value="CREATE"/>
+        </div>
+    </form>
+    <div>
+
+        <ul>
+            <li th:if="${projects.empty}">
+                You haven't created a project yet
+            </li>
+            <li th:each="project : ${projects}">
+                <a th:href="@{/projects/__${project.id}__}">
+                    <p th:text="${project.name}"></p>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

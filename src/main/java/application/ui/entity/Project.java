@@ -2,13 +2,12 @@ package application.ui.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.Size;
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Project {
@@ -20,7 +19,11 @@ public class Project {
 
     @Getter
     @Setter
-    @Size(min=4, message = "{Size.Project.ProjectName}")
     @NotEmpty(message = "Name is required.")
-    private String projectName;
+    @Column(unique = true)
+    private String name;
+
+    @Getter
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
+    private List<Task> tasks = new ArrayList<>();
 }

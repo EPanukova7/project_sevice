@@ -2,42 +2,40 @@ package application.ui.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
-import javax.validation.Valid;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 public class Task {
 
+    @Id
     @Getter
     @Setter
     @GeneratedValue(strategy= GenerationType.AUTO)
-    @Id
     private Integer id;
 
     @Getter
     @Setter
-    @Size(min=4, message = "{Size.Task.TaskName}")
     @NotEmpty(message = "Task is required.")
-    private String taskName;
+    private String name;
 
     @Getter
     @Setter
-    @Size(min=1, message = "{Size.Task.TaskDescription}")
     @NotEmpty(message = "Description is required.")
-    @Valid()
-    private String taskDescription;
+    private String description;
 
     @Getter
     @Setter
-    @NotEmpty(message = "State is required.")
-    private Boolean taskState;
+//    @NotEmpty(message = "State is required.")
+    @Column(columnDefinition = "boolean default false")
+    private boolean state;
 
     @Getter
     @Setter
     @NotEmpty
-    private Integer projectId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "project_id", referencedColumnName = "id", nullable = false)
+    private Project project;
 
 }
