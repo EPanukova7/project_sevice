@@ -32,6 +32,7 @@ public class TaskController {
         if (result.hasErrors()) {
             return new ModelAndView("tasks/create", "formErrors", result.getAllErrors());
         }
+        task.setProject(project);
         task = this.taskRepository.save(task);
         HashMap<String, Object> params = new HashMap<>();
         params.put("project_id", project.getId());

@@ -27,13 +27,15 @@ public class Task {
 
     @Getter
     @Setter
-    @NotEmpty(message = "State is required.")
-    private Boolean state;
+//    @NotEmpty(message = "State is required.")
+    @Column(columnDefinition = "boolean default false")
+    private boolean state;
 
     @Getter
+    @Setter
     @NotEmpty
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "project_id")
+    @JoinColumn(name = "project_id", referencedColumnName = "id", nullable = false)
     private Project project;
 
 }

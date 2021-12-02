@@ -29,7 +29,7 @@
                         You haven't created a task yet
                     </li>
                     <li th:each="task : ${tasks}"
-                        th:text="${task.id} + ' ' + ${task.taskName} + ' ' + ${task.state}">
+                        th:text="${task.name} + ' ' + ${task.description} + ' ' + ${task.state}">
                     </li>
                 </ul>
             </div>

@@ -15,7 +15,6 @@ public class Project {
     @Getter
     @Setter
     @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(unique = false)
     private Integer id;
 
     @Getter
