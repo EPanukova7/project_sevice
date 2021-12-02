@@ -1,5 +1,6 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+      xmlns="http://www.w3.org/1999/html"
       layout:decorator="layout">
 <head>
     <title>Tasks : Add</title>
@@ -35,11 +36,11 @@
             <label for="description">Описание:</label>
             <textarea
                     th:field="*{description}"
-                    th:class="${#fields.hasErrors('description')} ? 'field-error'"/>
+                    th:class="${#fields.hasErrors('description')} ? 'field-error'"></textarea>
 
             <dd th:field="*{projectId}"
                 th:class="${#fields.hasErrors('projectId')} ? 'field-error'"
-                th:value="${project.id}"/>
+                th:value="${project.id}"></dd>
         </div>
         <input type="submit" value="Сохранить"/>
     </form>

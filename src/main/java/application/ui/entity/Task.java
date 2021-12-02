@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -26,6 +27,7 @@ public class Task {
     @Setter
     @Size(min=1, message = "{Size.Task.TaskDescription}")
     @NotEmpty(message = "Description is required.")
+    @Valid()
     private String taskDescription;
 
     @Getter

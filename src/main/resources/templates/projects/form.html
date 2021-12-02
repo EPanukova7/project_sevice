@@ -35,8 +35,7 @@
     <div style="font-size: 24px">
         <ul>
             <p th:if="${projects.empty}" style="">
-                У вас пока нет проектов
-            </p>
+                У вас пока нет проектов</p>
             <p th:unless="${projects.empty}" th:each="project : ${projects}">
                 <div class="ic" style="display: flex; justify-content: flex-start">
                     <i class="fa fa-file-text" aria-hidden="true"></i>
