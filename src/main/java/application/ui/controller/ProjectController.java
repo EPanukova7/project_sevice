@@ -18,13 +18,13 @@ public class ProjectController {
     @Autowired
     private ProjectRepository projectRepository;
 
-    @GetMapping(value = "/")
+    @GetMapping(value = "/projects")
     public ModelAndView list(@ModelAttribute Project project) {
         Iterable<Project> projects = this.projectRepository.findAll();
         return new ModelAndView( "projects/list", "projects", projects);
     }
 
-    @PostMapping(value = "/")
+    @PostMapping(value = "/projects")
     public ModelAndView create(@Valid Project project, BindingResult result,
                                RedirectAttributes redirect) {
         if (result.hasErrors()) {
@@ -32,10 +32,10 @@ public class ProjectController {
         }
         project = this.projectRepository.save(project);
         redirect.addFlashAttribute("globalProject", "Successfully created a new project");
-        return new ModelAndView("redirect:/{project.id}", "project.id", project.getId());
+        return new ModelAndView("redirect:/projects/{project.id}", "project.id", project.getId());
     }
 
-    @GetMapping("/{project_id}")
+    @GetMapping("/projects/{project_id}")
     public ModelAndView view(@PathVariable("project_id") Project project) {
         Iterable<Task> tasks = project.getTasks();
         System.out.println(tasks);

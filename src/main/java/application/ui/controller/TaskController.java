@@ -18,26 +18,29 @@ public class TaskController {
     @Autowired
     private TaskRepository taskRepository;
 
-    @GetMapping(value = "/{project_id}/create_task")
-    public ModelAndView createForm(@PathVariable("project_id") Project project) {
+    @GetMapping(value = "/projects/{project_id}/tasks/create")
+    public ModelAndView createForm(@PathVariable("project_id") Project project, @ModelAttribute Task task) {
         HashMap<String, Object> params = new HashMap<>();
         params.put("project", project);
         return new ModelAndView("tasks/create", params);
     }
 
-    @PostMapping(value = "/{project_id}")
-    public ModelAndView create(@PathVariable String project_id,
+    @PostMapping(value = "/projects/{project_id}/tasks/create")
+    public ModelAndView create(@PathVariable("project_id") Project project,
                                @Valid Task task, BindingResult result,
                                RedirectAttributes redirect) {
         if (result.hasErrors()) {
             return new ModelAndView("tasks/create", "formErrors", result.getAllErrors());
         }
         task = this.taskRepository.save(task);
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("project_id", project.getId());
+        params.put("task_id", task.getId());
         redirect.addFlashAttribute("globalTask", "Successfully created a new task");
-        return new ModelAndView("redirect:/{project_id}/{task.id}", "task.id", task.getId());
+        return new ModelAndView("redirect:/projects/{project_id}/tasks/{task_id}", params);
     }
 
-    @GetMapping(value = "/{project_id}/{task_id}")
+    @GetMapping(value = "/projects/{project_id}/tasks/{task_id}")
     public ModelAndView view(@PathVariable("project_id") Project project,
                              @PathVariable("task_id") Task task) {
         HashMap<String, Object> params = new HashMap<>();

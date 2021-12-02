@@ -10,7 +10,7 @@
 <div layout:fragment="content"
      class="container">
     <form id="projectForm"
-          th:action="@{/}"
+          th:action="@{/projects}"
           th:object="${project}"
           method="post">
         <div th:if="${#fields.hasErrors('*')}"
@@ -20,10 +20,10 @@
                 Validation error
             </p>
         </div>
-        <label for="projectName">Name of project</label>
+        <label for="name">Name of project</label>
         <input type="text"
-               th:field="*{projectName}"
-               th:class="${#fields.hasErrors('projectName')} ? 'field-error'"/>
+               th:field="*{name}"
+               th:class="${#fields.hasErrors('name')} ? 'field-error'"/>
         <div class="form-actions">
             <input type="submit" value="CREATE"/>
         </div>
@@ -35,8 +35,8 @@
                 You haven't created a project yet
             </li>
             <li th:each="project : ${projects}">
-                <a th:href="@{/__${project.id}__}">
-                    <p th:text="${project.projectName}"></p>
+                <a th:href="@{/projects/__${project.id}__}">
+                    <p th:text="${project.name}"></p>
                 </a>
             </li>
         </ul>

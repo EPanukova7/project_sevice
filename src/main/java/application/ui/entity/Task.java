@@ -18,7 +18,7 @@ public class Task {
     @Getter
     @Setter
     @NotEmpty(message = "Task is required.")
-    private String taskName;
+    private String name;
 
     @Getter
     @Setter

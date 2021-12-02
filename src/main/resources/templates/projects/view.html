@@ -16,11 +16,11 @@
         <dt>ID</dt>
         <dd id="id" th:text="${project.id}">123</dd>
         <dt>Project name</dt>
-        <dd id="projectName" th:text="${project.projectName}">0</dd>
+        <dd id="name" th:text="${project.name}">0</dd>
         <dl>
             <div>
                 <h2>Create your tasks</h2>
-                <form th:action="@{/__${project.id}__/create_task}" target="_blank">
+                <form th:action="@{/projects/__${project.id}__/tasks/create}" target="_blank">
                     <button>Добавить новую задачу</button>
                 </form>
 

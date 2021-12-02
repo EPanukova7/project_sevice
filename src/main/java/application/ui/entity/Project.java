@@ -15,12 +15,14 @@ public class Project {
     @Getter
     @Setter
     @GeneratedValue(strategy= GenerationType.AUTO)
+    @Column(unique = false)
     private Integer id;
 
     @Getter
     @Setter
     @NotEmpty(message = "Name is required.")
-    private String projectName;
+    @Column(unique = true)
+    private String name;
 
     @Getter
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
