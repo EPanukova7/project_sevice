@@ -1,51 +1,38 @@
 package application.ui.service;
 
+import application.ui.entity.Project;
 import application.ui.entity.Task;
+import application.ui.entity.User;
+import application.ui.repository.ProjectRepository;
 import application.ui.repository.TaskRepository;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.List;
+import java.util.Optional;
 
-public class TaskService implements TaskRepository {
-    // для работы с базой данный
+@Service
+public class TaskService {
+    private static TaskRepository taskRepository;
 
-    private static AtomicInteger counter = new AtomicInteger();
-
-    private final ConcurrentMap<Integer, Task> tasks = new ConcurrentHashMap<Integer, Task>(); //
-
-    @Override
-    public Iterable<Task> findAll() {
-        return this.tasks.values();
+    @Autowired
+    public void setTaskRepository(TaskRepository taskRepository){
+        TaskService.taskRepository = taskRepository;
     }
 
-    @Override
-    public Iterable<Task> findTasksByProjectId(int projectId) {
-        ArrayList<Task> result = new ArrayList<Task>();
-        for (Task task : tasks.values()) {
-            if (task.getProjectId().equals(projectId)) {
-                result.add(task);
-            }
-        }
-        return result;
+    public static Task getById(Integer id){
+        return taskRepository.findById(id).orElse(null);
     }
 
-    @Override
-    public Task save(Task task) {
-        Integer id = task.getId();
-        if (id == null) {
-            id = counter.incrementAndGet();
-            task.setId(id);
-        }
-        this.tasks.put(id, task);
-        return task;
+    public static Iterable<Task> getAllByProject_id(Integer id){
+        Project project = ProjectService.getById(id);
+        return project.getTasks();
     }
 
-    @Override
-    public Task findTask(Integer id) {
-        return this.tasks.get(id);
+    public static Task create(Project project, Task task){
+        task.setProject(project);
+        return taskRepository.save(task);
     }
-
 }

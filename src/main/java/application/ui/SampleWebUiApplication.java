@@ -20,52 +20,59 @@ import application.ui.entity.Project;
 import application.ui.entity.Task;
 import application.ui.repository.ProjectRepository;
 import application.ui.repository.TaskRepository;
-import application.ui.service.ProjectService;
-import application.ui.service.TaskService;
+//import application.ui.service.ProjectService;
+//import application.ui.service.TaskService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
 
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan
 public class SampleWebUiApplication {
-
-	@Bean
-	public ProjectRepository projectRepository() {
-		return new ProjectService();
-	}
-
-	@Bean
-	public TaskRepository taskRepository() {
-		return new TaskService();
-	}
-
-	@Bean
-	public Converter<String, Project> projectConverter() {
-		return new Converter<String, Project>() {
-			@Override
-			public Project convert(String id) {
-				return projectRepository().findProject(Integer.valueOf(id));
-			}
-		};
-	}
-
-	@Bean
-	public Converter<String, Task> taskConverter() {
-		return new Converter<String, Task>() {
-			@Override
-			public Task convert(String id) {
-				return taskRepository().findTask(Integer.valueOf(id));
-			}
-		};
-	}
+//	@Autowired
+//	private ProjectRepository projectRepository;
+//	@Autowired
+//	private TaskRepository taskRepository;
 
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(SampleWebUiApplication.class, args);
 	}
+
+//	@Bean
+//	public ProjectRepository projectRepository() {
+//		return new ProjectService();
+//	}
+
+//	@Bean
+//	public TaskRepository taskRepository() {
+//		return new TaskService();
+//	}
+
+//	@Bean
+//	public Converter<String, Project> projectConverter() {
+//		return new Converter<String, Project>() {
+//			@Override
+//			public Project convert(String id) {
+//				return projectRepository().findProject(Integer.valueOf(id));
+//			}
+//		};
+//	}
+//
+//	@Bean
+//	public Converter<String, Task> taskConverter() {
+//		return new Converter<String, Task>() {
+//			@Override
+//			public Task convert(String id) {
+//				return taskRepository().findTask(Integer.valueOf(id));
+//			}
+//		};
+//	}
 
 }
