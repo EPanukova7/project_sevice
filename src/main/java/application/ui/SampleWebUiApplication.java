@@ -36,43 +36,9 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableAutoConfiguration
 @ComponentScan
 public class SampleWebUiApplication {
-//	@Autowired
-//	private ProjectRepository projectRepository;
-//	@Autowired
-//	private TaskRepository taskRepository;
 
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(SampleWebUiApplication.class, args);
 	}
-
-//	@Bean
-//	public ProjectRepository projectRepository() {
-//		return new ProjectService();
-//	}
-
-//	@Bean
-//	public TaskRepository taskRepository() {
-//		return new TaskService();
-//	}
-
-//	@Bean
-//	public Converter<String, Project> projectConverter() {
-//		return new Converter<String, Project>() {
-//			@Override
-//			public Project convert(String id) {
-//				return projectRepository().findProject(Integer.valueOf(id));
-//			}
-//		};
-//	}
-//
-//	@Bean
-//	public Converter<String, Task> taskConverter() {
-//		return new Converter<String, Task>() {
-//			@Override
-//			public Task convert(String id) {
-//				return taskRepository().findTask(Integer.valueOf(id));
-//			}
-//		};
-//	}
 
 }

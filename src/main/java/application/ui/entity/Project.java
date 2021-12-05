@@ -11,6 +11,7 @@ import java.util.List;
 
 @Entity
 public class Project {
+
     @Id
     @Getter
     @Setter
@@ -26,4 +27,13 @@ public class Project {
     @Getter
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
     private List<Task> tasks = new ArrayList<>();
+
+    @Getter
+    @Setter
+    private String code;
+
+    @Getter
+    @Setter
+    @ManyToOne
+    private Integer ownerId;
 }
