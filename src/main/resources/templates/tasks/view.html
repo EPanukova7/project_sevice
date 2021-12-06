@@ -46,16 +46,30 @@
 <body>
     <div layout:fragment="content" class="container">
         <header th:insert="layout :: header"></header>
-            <dl>
-            <dt>ID</dt>
-            <dd id="id" th:text="${task.id}">123</dd>
-            <dt>Task name</dt>
-            <dd id="name"
-                th:text="${task.name}">
-                A short name of task...
-                </dd>
-            </dl>
-
+            <div class="modal modal-sheet position-static d-block py-5" style="background: SkyBlue;" tabindex="-1" role="dialog" id="modalSheet">
+                    <div class="modal-dialog" role="document">
+                            <h2 class="fw-bold mb-0">Your task has been successfully created</h2>
+                            <ul class="d-grid gap-4 my-5 list-unstyled">
+                                <li class="d-flex gap-4">
+                                    <div>
+                                        <h5 class="mb-0">Task-Id</h5>
+                                        <dd id="id" th:text="${task.id}"></dd>
+                                    </div>
+                                </li>
+                                <li class="d-flex gap-4">
+                                    <div>
+                                        <h5 class="mb-0">Task Title</h5>
+                                        <dd id="name"
+                                            th:text="${task.name}">
+                                        </dd>
+                                    </div>
+                                </li>
+                            </ul>
+                    </div>
+                </div>
+            <form th:action="@{/projects/__${project.id}__}">
+                <button class="btn btn-lg btn-primary" type="submit" style="margin-top: 20px; width: 100px; height: 50px;">BACK</button>
+            </form>
     </div>
 </body>
 </html>
