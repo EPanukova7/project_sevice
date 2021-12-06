@@ -54,7 +54,39 @@
 <!--        Some Projects-->
 <!--    </div>-->
 
-        <form id="taskForm"
+        <!--form id="taskForm"
+              th:action="@{/projects/__${project.id}__/tasks/create}"
+              th:object="${task}"
+              method="post"-->
+<!--            <div th:if="${#fields.hasErrors('*')}"-->
+<!--                 class="alert alert-error">-->
+<!--                <p th:each="error : ${#fields.errors('*')}"-->
+<!--                   th:text="${error}">-->
+<!--                    Validation error-->
+<!--                </p>-->
+<!--            </div>-->
+            <!--div>
+                <label for="name">Название задачи:</label>
+                <input type="text"
+                       th:field="*{name}"
+                       th:class="${#fields.hasErrors('name')} ? 'field-error'"/>
+            </div-->
+            <!--div>
+                <label for="description">Описание:</label>
+                <textarea
+                        th:field="*{description}"
+                        th:class="${#fields.hasErrors('description')} ? 'field-error'"></textarea>
+    <--            <label for="projectId"> Project ID: </label>-->
+    <!--            <dd th:field="*{projectId}"-->
+    <!--                th:class="${#fields.hasErrors('projectId')} ? 'field-error'"-->
+    <!--                th:value="${project.id}"/>-->
+            <!--/div-->
+            <!--input type="submit" value="Сохранить"/>
+        </form-->
+        <!--form th:action="@{/projects/__${project.id}__}">
+            <button>Назад</button>
+        </form-->
+        <form class="form-signin" id="taskForm"
               th:action="@{/projects/__${project.id}__/tasks/create}"
               th:object="${task}"
               method="post">
@@ -65,41 +97,27 @@
                     Validation error
                 </p>
             </div>
-            <div>
-                <label for="name">Название задачи:</label>
-                <input type="text"
-                       th:field="*{name}"
-                       th:class="${#fields.hasErrors('name')} ? 'field-error'"/>
-            </div>
-            <div>
-                <label for="description">Описание:</label>
-                <textarea
-                        th:field="*{description}"
-                        th:class="${#fields.hasErrors('description')} ? 'field-error'"></textarea>
-    <!--            <label for="projectId"> Project ID: </label>-->
-    <!--            <dd th:field="*{projectId}"-->
-    <!--                th:class="${#fields.hasErrors('projectId')} ? 'field-error'"-->
-    <!--                th:value="${project.id}"/>-->
-            </div>
-            <input type="submit" value="Сохранить"/>
-        </form>
-        <form th:action="@{/projects/__${project.id}__}">
-            <button>Назад</button>
-        </form>
-        <form class="form-signin">
             <h4 class="pb-2 border-bottom" style="margin-top: 25px">Add new task</h4>
             <!--h1 class="h3 mb-3 font-weight-normal">Add new task</h1-->
-            <label for="inputEmail" class="sr-only">Title for task</label>
-            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-            <label for="inputPassword" class="sr-only">Description</label>
-            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+            <label for="name" class="sr-only">Title for task</label>
+            <input type="text"
+                   th:field="*{name}"
+                   th:class="${#fields.hasErrors('name')} ? 'field-error'" class="form-control" placeholder="Email address" required="" autofocus="">
+            <label  for="description" class="sr-only">Description</label>
+            <input th:field="*{description}"
+                   th:class="${#fields.hasErrors('description')} ? 'field-error'" class="form-control" placeholder="Password" required="">
             <div class="checkbox mb-3">
                 <label>
                     <input type="checkbox" value="remember-me"> Remember me
                 </label>
             </div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-            <p class="mt-5 mb-3 text-muted">© 2017-2018</p>
+            <div>
+                <button th:action="@{/projects/__${project.id}__}" class="btn btn-lg btn-primary btn-block" type="submit">Back</button>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            </div>
+
+
+            <p class="mt-5 mb-3 text-muted">© 2021</p>
         </form>
 </div>
 </body>
