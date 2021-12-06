@@ -30,10 +30,17 @@ public class Project {
 
     @Getter
     @Setter
-    private String code;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id", referencedColumnName = "id", nullable = false)
+    private User owner;
 
     @Getter
     @Setter
-    @ManyToOne
-    private Integer ownerId;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "project_user",
+        joinColumns = { @JoinColumn(name = "project_id", nullable = false) },
+        inverseJoinColumns = { @JoinColumn(name = "user_id", nullable = false) }
+    )
+    private List<User> users = new ArrayList<>();
 }

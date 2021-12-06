@@ -2,7 +2,7 @@ package application.ui.controller;
 
 import application.ui.entity.Project;
 import application.ui.entity.Task;
-import application.ui.repository.TaskRepository;
+import application.ui.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -15,8 +15,6 @@ import java.util.HashMap;
 
 @Controller
 public class TaskController {
-    @Autowired
-    private TaskRepository taskRepository;
 
     @GetMapping(value = "/projects/{project_id}/tasks/create")
     public ModelAndView createForm(@PathVariable("project_id") Project project, @ModelAttribute Task task) {
@@ -32,8 +30,7 @@ public class TaskController {
         if (result.hasErrors()) {
             return new ModelAndView("tasks/create", "formErrors", result.getAllErrors());
         }
-        task.setProject(project);
-        task = this.taskRepository.save(task);
+        task = TaskService.create(project, task);
         HashMap<String, Object> params = new HashMap<>();
         params.put("project_id", project.getId());
         params.put("task_id", task.getId());
