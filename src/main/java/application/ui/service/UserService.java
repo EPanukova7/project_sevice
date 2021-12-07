@@ -12,6 +12,10 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private static UserRepository userRepository;
 
+    public static User loginOrRegister(User user) {
+        return new User();
+    }
+
     @Autowired
     public void setUserRepository(UserRepository userRepository){
         UserService.userRepository = userRepository;
@@ -21,10 +25,10 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
 
-    public static Iterable<User> getAllByProject_id(Integer projectId){
-        Project project = ProjectService.getById(projectId);
-        return project.getUsers();
-    }
+//    public static Iterable<User> getAllByProject_id(Integer projectId){
+//        Project project = ProjectService.getById(projectId);
+//        return project.getUsers();
+//    }
 
     public static User create(User user){
         return userRepository.save(user);

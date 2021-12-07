@@ -17,11 +17,10 @@ import java.util.HashMap;
 
 @Controller
 public class ProjectController {
-
     @GetMapping(value = "/projects")
     public ModelAndView list(@ModelAttribute Project project) {
         Iterable<Project> projects = ProjectService.getAll();
-        return new ModelAndView( "projects/list", "projects", projects);
+        return new ModelAndView("projects/list", "projects", projects);
     }
 
     @PostMapping(value = "/projects")
@@ -33,7 +32,7 @@ public class ProjectController {
         if (result.hasErrors()) {
             return new ModelAndView("projects/list", "formErrors", result.getAllErrors());
         }
-        project = ProjectService.create(project, owner);
+//        project = ProjectService.create(project, owner);
         redirect.addFlashAttribute("globalProject", "Successfully created a new project");
         return new ModelAndView("redirect:/projects/{project.id}", "project.id", project.getId());
     }
