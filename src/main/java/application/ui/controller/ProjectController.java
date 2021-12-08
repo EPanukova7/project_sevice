@@ -21,7 +21,7 @@ public class ProjectController {
     @GetMapping(value = "/projects")
     public ModelAndView list(@ModelAttribute Project project) {
         Iterable<Project> projects = ProjectService.getAll();
-        return new ModelAndView( "projects/list", "projects", projects);
+        return new ModelAndView("projects/list", "projects", projects);
     }
 
     @PostMapping(value = "/projects")

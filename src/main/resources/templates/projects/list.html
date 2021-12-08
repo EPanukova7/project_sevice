@@ -8,7 +8,7 @@
         <meta name="description" content="">
         <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
         <meta name="generator" content="Hugo 0.88.1">
-        <title>Main Page</title>
+        <title>All projects</title>
 
         <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/headers/">
 
@@ -33,7 +33,6 @@
             -moz-user-select: none;
             user-select: none;
           }
-
           @media (min-width: 768px) {
             .bd-placeholder-img-lg {
               font-size: 3.5rem;
@@ -48,8 +47,9 @@
     <main>
         <div class="container px-4 py-5 " id="custom-cards">
             <header th:insert="layout :: header"></header>  <!--из лоя вставила хедер -->
+            <!--
             <h2 class="pb-2 border-bottom" style="margin-top: 25px">All active projects</h2>
-
+            -->
             <form id="projectForm"
                   th:action="@{/projects}"
                   th:object="${project}"
@@ -61,13 +61,14 @@
                         Validation error
                     </p>
                 </div>
-                <label for="name" style="margin-top: 50px; font-size: 22px; color: grey">Put name of new project  </label>
+                <label for="name" style="margin-top: 50px; font-size: 22px; color: grey"> Type the name of a new project </label>
                 <div class="navbar" style="display: flex; justify-content: space-between;">
                     <input class="" type="text"
                            th:field="*{name}"
-                           th:class="${#fields.hasErrors('name')} ? 'field-error'" placeholder=" project name" style="margin-top: 5px; width: 600px; height: 45px"/>
+                           th:class="${#fields.hasErrors('name')} ? 'field-error'" placeholder="project name" style="margin-top: 5px; width: 600px; height: 45px"/>
                     <div class="form-actions">
                         <!--input type="submit" value="CREATE" style="margin-top: 5px"/-->
+                        <button class="btn btn-lg btn-primary btn-block" type="submit" style="height: 45px; text-align: center;">JOIN PROJECT</button>
                         <button class="btn btn-lg btn-primary btn-block" type="submit" style="height: 45px; text-align: center;">CREATE</button>
                     </div>
                 </div>
