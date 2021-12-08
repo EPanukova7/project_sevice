@@ -2,36 +2,47 @@ package application.ui.controller;
 
 import application.ui.entity.User;
 import application.ui.repository.UserRepository;
+import application.ui.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.Cookie;
 import javax.validation.Valid;
+import java.util.HashMap;
 
 @Controller
 public class UserController {
-    @Autowired
-    UserRepository repository;
-
     @PostMapping(value = "/login")
-    public ModelAndView loginOrRegister(@Valid User user,
-                                        BindingResult result) {
+    public ModelAndView login_post(@Valid User user, BindingResult result, RedirectAttributes redirect) {
         if (result.hasErrors()) {
             return new ModelAndView("users/login", "formErrors", result.getAllErrors());
         }
-        User dbUser = repository.findUserByEmail(user.getEmail());
+        User dbUser = UserService.getByEmail(user.getEmail());
+        // TODO: hash password
         if (dbUser == null) {
-            repository.save(user);
+            dbUser = UserService.create(user);
+        } else if (!dbUser.getPassword().equals(user.getPassword())) {
+            return new ModelAndView("users/login", "error", "Wrong password");
         }
-        return new ModelAndView("redirect:/projects");
+        Cookie cookie = new Cookie("user", user.getId().toString());
+        cookie.setMaxAge(3600);
+        return new ModelAndView("redirect:/projects", "user", dbUser);
     }
 
     @GetMapping(value = "/login")
-    public ModelAndView login(@ModelAttribute User user) {
+    public ModelAndView login_get(@ModelAttribute User user) {
         return new ModelAndView("users/login");
+    }
+
+    private String hashPassword(String password) {
+        // TODO
+        return "";
     }
 }
