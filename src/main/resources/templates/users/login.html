@@ -225,7 +225,7 @@
             <!-- Login Form -->
             <form id="userForm" th:action="@{/login}" th:object="${user}" method="post">
                 <div th:if="${#fields.hasErrors('*')}"
-                     class="alert alert-error" >
+                     class="alert alert-error">
                     <p th:each="error : ${#fields.errors('*')}"
                        th:text="${error}">
                         Validation error
