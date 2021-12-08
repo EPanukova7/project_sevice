@@ -5,7 +5,6 @@ import lombok.Setter;
 import javax.validation.constraints.NotEmpty;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,14 +27,14 @@ public class User {
     @NotEmpty(message = "Password is required.")
     private String hashedPassword;
 
-    @Getter
-    @Setter
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
-    private List<Project> ownedProjects = new ArrayList<>();
-
-    @Getter
-    @Setter
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users")
-    private List<Project> projects = new ArrayList<>();
+//    @Getter
+//    @Setter
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
+//    private List<Project> ownedProjects = new ArrayList<>();
+//
+//    @Getter
+//    @Setter
+//    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users")
+//    private List<Project> projects = new ArrayList<>();
 
 }

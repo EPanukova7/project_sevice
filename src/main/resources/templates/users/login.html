@@ -1,0 +1,36 @@
+
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Please Login</title>
+</head>
+<body>
+<div>
+    <form id="userForm"
+          th:action="@{/login}"
+          th:object="${user}"
+          method="post">
+        <div th:if="${#fields.hasErrors('*')}"
+             class="alert alert-error" >
+            <p th:each="error : ${#fields.errors('*')}"
+               th:text="${error}">
+                Validation error
+            </p>
+        </div>
+        <fieldset>
+            <legend>Please Login</legend>
+            <label for="email">Email</label>
+            <input type="text" th:field="*{email}"
+                   th:class="${#fields.hasErrors('email')} ? 'field-error'" placeholder="email"/>
+            <label for="hashedPassword">Password</label>
+            <input type="password"
+                   th:field="*{hashedPassword}"
+                   th:class="${#fields.hasErrors('hashedPassword')} ? 'field-error'"/>
+            <div class="form-actions">
+                <button type="submit" class="btn">Log In</button>
+            </div>
+        </fieldset>
+    </form>
+</div>
+</body>
+</html>
