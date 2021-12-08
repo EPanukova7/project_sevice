@@ -27,28 +27,28 @@ public class ProjectService {
         return projectRepository.findAll();
     }
 
-    public static Project create(Project project, User owner){
-        project.setOwner(owner);
+//    public static Project create(Project project, User owner){
+//        project.setOwner(owner);
+//
+//        // TODO: don't select all users by "project.getUsers()" and save whole "users",
+//        //  just insert one row into "project_user".
+//        //  There should be something like "project.addUser(user)"
+//        List<User> users = project.getUsers();
+//        users.add(owner);
+//        project.setUsers(users);
+//
+//        return projectRepository.save(project);
+//    }
 
-        // TODO: don't select all users by "project.getUsers()" and save whole "users",
-        //  just insert one row into "project_user".
-        //  There should be something like "project.addUser(user)"
-        List<User> users = project.getUsers();
-        users.add(owner);
-        project.setUsers(users);
-
-        return projectRepository.save(project);
-    }
-
-    public static Project addUser(Project project, User user){
-        // TODO: don't select all users by "project.getUsers()" and save whole "users",
-        //  just insert one row into "project_user".
-        //  There should be something like "project.addUser(user)"
-        List<User> users = project.getUsers();
-        users.add(user);
-        project.setUsers(users);
-
-        return projectRepository.save(project);
-    }
+//    public static Project addUser(Project project, User user){
+//        // TODO: don't select all users by "project.getUsers()" and save whole "users",
+//        //  just insert one row into "project_user".
+//        //  There should be something like "project.addUser(user)"
+//        List<User> users = project.getUsers();
+//        users.add(user);
+//        project.setUsers(users);
+//
+//        return projectRepository.save(project);
+//    }
 
 }
