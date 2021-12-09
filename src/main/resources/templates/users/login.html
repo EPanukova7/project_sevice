@@ -225,7 +225,7 @@
             <!-- Login Form -->
             <form id="userForm" th:action="@{/login}" th:object="${user}" method="post">
                 <div th:if="${#fields.hasErrors('*')}"
-                     class="alert alert-error" >
+                     class="alert alert-error">
                     <p th:each="error : ${#fields.errors('*')}"
                        th:text="${error}">
                         Validation error
@@ -233,9 +233,9 @@
                 </div>
                 <input type="text" th:field="*{email}" th:class="${#fields.hasErrors('email')} ? 'field-error'"
                        id="email" class="fadeIn third" placeholder=""/>
-                <input type="password" th:field="*{hashedPassword}" id="hashedPassword"
-                       th:class="${#fields.hasErrors('hashedPassword')} ? 'field-error'"
-                       class="fadeIn third" name="hashedPassword">
+                <input type="password" th:field="*{password}" id="password"
+                       th:class="${#fields.hasErrors('password')} ? 'field-error'"
+                       class="fadeIn third" name="password">
                 <button type="submit" class="fadeIn fourth btn">Log In</button>
             </form>
 
