@@ -72,6 +72,7 @@ public class ProjectService {
         Random random = new Random();
         for (int i = 0; i < length; i++){
             int char_code = random.nextInt(n_chars);
+            System.out.println(char_code);
             if (char_code < 26){
                 result.append((char)('a' + char_code));
             }

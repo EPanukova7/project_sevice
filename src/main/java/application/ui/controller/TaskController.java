@@ -18,17 +18,15 @@ import java.util.HashMap;
 public class TaskController {
 
     @GetMapping(value = "/projects/{project_id}/tasks/create")
-    public ModelAndView create_get(@PathVariable("project_id") Project project, @ModelAttribute Task task, User user) {
+    public ModelAndView create_get(@PathVariable("project_id") Project project, @ModelAttribute Task task) {
         HashMap<String, Object> params = new HashMap<>();
         params.put("project", project);
-        params.put("user", user);
         return new ModelAndView("tasks/create", params);
     }
 
     @PostMapping(value = "/projects/{project_id}/tasks/create")
     public ModelAndView create_post(@PathVariable("project_id") Project project,
                                     @Valid Task task,
-                                    User user,
                                     BindingResult result,
                                     RedirectAttributes redirect) {
         if (result.hasErrors()) {
@@ -38,19 +36,16 @@ public class TaskController {
         HashMap<String, Object> params = new HashMap<>();
         params.put("project_id", project.getId());
         params.put("task_id", task.getId());
-        params.put("user", user);
         redirect.addFlashAttribute("globalTask", "Successfully created a new task");
         return new ModelAndView("redirect:/projects/{project_id}/tasks/{task_id}", params);
     }
 
     @GetMapping(value = "/projects/{project_id}/tasks/{task_id}")
     public ModelAndView view_get(@PathVariable("project_id") Project project,
-                                 @PathVariable("task_id") Task task,
-                                 User user) {
+                                 @PathVariable("task_id") Task task) {
         HashMap<String, Object> params = new HashMap<>();
         params.put("project", project);
         params.put("task", task);
-        params.put("user", user);
         return new ModelAndView("tasks/view", params);
     }
 }

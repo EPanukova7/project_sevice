@@ -21,7 +21,7 @@ public class Project {
 
     @Getter
     @Setter
-    @NotNull
+    @NotEmpty(message = "Name is required")
     @Column(unique = true)
     private String name;
 
