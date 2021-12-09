@@ -17,32 +17,28 @@ import java.util.HashMap;
 @Controller
 public class TaskController {
 
-    @GetMapping(value = "/projects/{project_id}/tasks/create")
-    public ModelAndView create_get(@PathVariable("project_id") Project project, @ModelAttribute Task task) {
-        HashMap<String, Object> params = new HashMap<>();
-        params.put("project", project);
-        return new ModelAndView("tasks/create", params);
+    @GetMapping(value = "/projects/{projectId}/tasks/create")
+    public ModelAndView create_get(@PathVariable("projectId") Project project, @ModelAttribute Task task) {
+        return new ModelAndView("tasks/create", "project", project);
     }
 
-    @PostMapping(value = "/projects/{project_id}/tasks/create")
-    public ModelAndView create_post(@PathVariable("project_id") Project project,
+    @PostMapping(value = "/projects/{projectId}/tasks/create")
+    public ModelAndView create_post(@PathVariable("projectId") Project project,
                                     @Valid Task task,
-                                    BindingResult result,
-                                    RedirectAttributes redirect) {
+                                    BindingResult result) {
         if (result.hasErrors()) {
             return new ModelAndView("tasks/create", "formErrors", result.getAllErrors());
         }
         task = TaskService.create(project, task);
         HashMap<String, Object> params = new HashMap<>();
-        params.put("project_id", project.getId());
-        params.put("task_id", task.getId());
-        redirect.addFlashAttribute("globalTask", "Successfully created a new task");
-        return new ModelAndView("redirect:/projects/{project_id}/tasks/{task_id}", params);
+        params.put("projectId", project.getId());
+        params.put("taskId", task.getId());
+        return new ModelAndView("redirect:/projects/{projectId}/tasks/{taskId}", params);
     }
 
-    @GetMapping(value = "/projects/{project_id}/tasks/{task_id}")
-    public ModelAndView view_get(@PathVariable("project_id") Project project,
-                                 @PathVariable("task_id") Task task) {
+    @GetMapping(value = "/projects/{projectId}/tasks/{taskId}")
+    public ModelAndView view_get(@PathVariable("projectId") Project project,
+                                 @PathVariable("taskId") Task task) {
         HashMap<String, Object> params = new HashMap<>();
         params.put("project", project);
         params.put("task", task);
