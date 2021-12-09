@@ -7,7 +7,9 @@ import javax.validation.constraints.NotEmpty;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class User {
@@ -36,6 +38,6 @@ public class User {
     @Getter
     @Setter
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users")
-    private List<Project> projects = new ArrayList<>();
+    private Set<Project> projects = new HashSet<>();
 
 }

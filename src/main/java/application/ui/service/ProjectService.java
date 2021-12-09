@@ -6,10 +6,7 @@ import application.ui.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class ProjectService {
@@ -43,7 +40,7 @@ public class ProjectService {
         // TODO: don't select all users by "project.getUsers()" and save whole "users",
         //  just insert one row into "project_user".
         //  There should be something like "project.addUser(user)"
-        List<User> users = project.getUsers();
+        Set<User> users = project.getUsers();
         users.add(owner);
         project.setUsers(users);
         project.setCode(generateCode());
@@ -55,7 +52,7 @@ public class ProjectService {
         // TODO: don't select all users by "project.getUsers()" and save whole "users",
         //  just insert one row into "project_user".
         //  There should be something like "project.addUser(user)"
-        List<User> users = project.getUsers();
+        Set<User> users = project.getUsers();
         users.add(user);
         project.setUsers(users);
 

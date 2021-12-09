@@ -21,7 +21,7 @@ import java.util.HashMap;
 @Controller
 public class UserController {
     @PostMapping(value = "/login")
-    public ModelAndView login_post(@Valid User user, BindingResult result, RedirectAttributes redirect,
+    public ModelAndView login_post(@Valid User user, BindingResult result,
                                    HttpServletResponse response) {
         if (result.hasErrors()) {
             return new ModelAndView("users/login", "formErrors", result.getAllErrors());

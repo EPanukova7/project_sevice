@@ -8,7 +8,9 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Project {
@@ -49,5 +51,5 @@ public class Project {
         joinColumns = { @JoinColumn(name = "project_id", nullable = false) },
         inverseJoinColumns = { @JoinColumn(name = "user_id", nullable = false) }
     )
-    private List<User> users = new ArrayList<>();
+    private Set<User> users = new HashSet<>();
 }
