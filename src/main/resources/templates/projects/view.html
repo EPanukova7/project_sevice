@@ -47,13 +47,31 @@
         <header th:insert="layout :: header"></header>
 
         <h4 id="name" th:text="${project.name}" class="pb-2 border-bottom" style="margin-top: 25px"></h4>
+        <!-- ВЫВОДИМ СОЗДАТЕЛЯ ПРОЕКТА -->
+            <div style="float: right; width: 250px;">
+                <div style="text-align: right; color: lightblue;">
+                    <h5 style="color: black; float: left; margin-right: 10px;">
+                        Owner: </h5>
+                    <div> <p th:object="${owner}" th:text="${owner}" style="font-size: 17px; color: blue;"></p></div>
+                </div>
+            <!-- ВЫВОДИМ УЧАСТНИКОВ ПРОЕКТА -->
+                <div>
+                    <h5 style="color: black; float: left; margin-right: 10px;">Contributors: </h5>
+                    <div th:each="user : ${usersProject}" style="text-align: right; color: lightblue;" >
+                        <p th:text="${user.email}" style="font-size: 17px; color: black;"></p>
+                    </div>
+
+                </div>
+            </div>
             <div>
                 <form th:action="@{/projects/__${project.id}__/tasks/create}" target="_blank">
                     <div style="display: flex;">
                         <div>
                             <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top: 5px; width: 100px; height: 50px; ">ADD</button></div>
                         <ul>
-                            <div th:if="${tasks.empty}">You haven't created a task yet</div>
+                            <div th:if="${tasks.empty}"
+                                 style="margin-top: 24px; font-size: 25px; color: crimson; text-align: -webkit-center;">
+                                You haven't created a task yet</div>
                                 <div th:each="task : ${tasks}" class="list-group">
                                     <label class="list-group-item d-flex gap-3">
                                         <input class="form-check-input flex-shrink-0" type="checkbox" value="" checked="" style="font-size: 1.375em;">
