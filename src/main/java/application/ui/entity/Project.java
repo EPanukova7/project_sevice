@@ -23,7 +23,7 @@ public class Project {
 
     @Getter
     @Setter
-    @NotEmpty(message = "Name is required")
+    @NotNull
     @Column(unique = true)
     private String name;
 
