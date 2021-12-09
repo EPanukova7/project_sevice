@@ -14,13 +14,15 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.HashMap;
 
 @Controller
 public class UserController {
     @PostMapping(value = "/login")
-    public ModelAndView login_post(@Valid User user, BindingResult result, RedirectAttributes redirect) {
+    public ModelAndView login_post(@Valid User user, BindingResult result, RedirectAttributes redirect,
+                                   HttpServletResponse response) {
         if (result.hasErrors()) {
             return new ModelAndView("users/login", "formErrors", result.getAllErrors());
         }
@@ -31,8 +33,10 @@ public class UserController {
         } else if (!dbUser.getPassword().equals(user.getPassword())) {
             return new ModelAndView("users/login", "error", "Wrong password");
         }
-        Cookie cookie = new Cookie("user", user.getId().toString());
+        Cookie cookie = new Cookie("userId", dbUser.getId().toString());
         cookie.setMaxAge(3600);
+        cookie.setSecure(true);
+        response.addCookie(cookie);
         return new ModelAndView("redirect:/projects", "user", dbUser);
     }
 
