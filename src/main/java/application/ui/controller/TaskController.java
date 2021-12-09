@@ -4,6 +4,7 @@ import application.ui.entity.Project;
 import application.ui.entity.Task;
 import application.ui.entity.User;
 import application.ui.service.TaskService;
+import application.ui.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -19,6 +20,7 @@ public class TaskController {
 
     @GetMapping(value = "/projects/{projectId}/tasks/create")
     public ModelAndView create_get(@PathVariable("projectId") Project project, @ModelAttribute Task task) {
+
         return new ModelAndView("tasks/create", "project", project);
     }
 

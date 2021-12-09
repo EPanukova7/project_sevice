@@ -47,6 +47,22 @@
         <header th:insert="layout :: header"></header>
 
         <h4 id="name" th:text="${project.name}" class="pb-2 border-bottom" style="margin-top: 25px"></h4>
+        <!-- ВЫВОДИМ СОЗДАТЕЛЯ ПРОЕКТА -->
+            <div style="float: right; width: 250px;">
+                <div style="text-align: right; color: lightblue;">
+                    <h5 style="color: black; float: left; margin-right: 10px;">
+                        Owner: </h5>
+                    <div> <p th:object="${owner}" th:text="${owner}" style="font-size: 17px; color: blue;"></p></div>
+                </div>
+            <!-- ВЫВОДИМ УЧАСТНИКОВ ПРОЕКТА -->
+                <div>
+                    <h5 style="color: black; float: left; margin-right: 10px;">Contributors: </h5>
+                    <div th:each="user : ${usersProject}" style="text-align: right; color: lightblue;" >
+                        <p th:text="${user.email}" style="font-size: 17px; color: black;"></p>
+                    </div>
+
+                </div>
+            </div>
             <div>
                 <form th:action="@{/projects/__${project.id}__/tasks/create}" target="_blank">
                     <div style="display: flex;">
