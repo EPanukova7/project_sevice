@@ -83,7 +83,7 @@
                     <div class="modal-dialog modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <!-- ФОРМА ДЛЯ ВВОДА КОДА-->
-                            <form th:action="@{/projects/join}" th:object="${project}" method="post">
+                            <form th:action="@{/projects/join}" method="post">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="staticBackdropLabel">Enter the code of the project you want to join</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
@@ -91,7 +91,8 @@
                                 <div class="modal-body">
                                     <div class="input-group mb-3">
                                         <span class="input-group-text" id="basic-addon1">Project Code</span>
-                                        <input th:field="*{code}" type="text" class="form-control" placeholder="Code" aria-label="Project code" aria-describedby="basic-addon1">
+                                        <input th:field="*{code}" type="text" class="form-control"
+                                               placeholder="Code" aria-label="Project code" aria-describedby="basic-addon1">
                                     </div>
                                 </div>
                                 <div class="modal-footer">
