@@ -46,12 +46,42 @@
         <ul class="nav me-auto">
           <li class="nav-item"><a href="#" class="nav-link link-dark px-2 active" aria-current="page"></a></li>
           <li class="nav-item"><a th:href="@{/projects}" href="projects.html" class="nav-link link-dark px-2" style="color: blue; font-size: 25px">Projects</a></li>
-          <li class="nav-item"><a href="#" class="nav-link link-dark px-2" style="font-size: 25px">Developers</a></li>
-          <li class="nav-item"><a href="#" class="nav-link link-dark px-2" style="color: grey; font-size: 25px">Join a project</a></li>
+            <div>
+                <!-- Кнопка для модального окна  -->
+                <li class="nav-item"><a href="#" class="nav-link link-dark px-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="font-size: 25px; color: red">Developers</a></li>
+
+                <!-- Модальное окно -->
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <form>
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel">Developers</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="input-group mb-3">
+                                        <h5 style="color: black; float: left; margin-right: 10px;">Contributors: </h5>
+                                            <div th:each="user : ${usersProject}" style="text-align: right; color: lightblue;" >
+                                                <span class="input-group-text" id="basic-addon1" th:text="${user.email}"
+                                                      style="font-size: 17px; color: black;"></span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          <li class="nav-item"><a href="#" class="nav-link link-dark px-2" style="color: grey; font-size: 25px">Double</a></li>
           <li class="nav-item"><a href="#" class="nav-link link-dark px-2" style="color: grey; font-size: 25px">About</a></li>
         </ul>
         <ul class="nav">
-          <li class="nav-item"><a th:href="@{/login}" href="login.html" class="nav-link link-dark px-2" style="font-size: 25px">Sign In</a></li>
+          <li class="nav-item"><a th:href="@{/login}" href="login.html" th:object="${user}" th:text="${user}" class="nav-link link-dark px-2" style="font-size: 25px; color: blue">Sign Out</a></li>
         </ul>
       </div>
     </nav>

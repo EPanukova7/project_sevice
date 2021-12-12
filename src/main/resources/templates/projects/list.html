@@ -6,8 +6,6 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
-        <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-        <meta name="generator" content="Hugo 0.88.1">
         <title>Main Page</title>
 
         <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/headers/">
@@ -50,11 +48,11 @@
         <div class="container px-4 py-5 " id="custom-cards">
             <header th:insert="layout :: header"></header>  <!--из лоя вставила хедер -->
             <h2 class="pb-2 border-bottom" style="margin-top: 25px">All active projects</h2>
-
-            <form id="projectForm"
-                  th:action="@{/projects}"
-                  th:object="${project}"
-                  method="post">
+            <!-- ВЫВОДИМ НАШЕГО ЮЗЕРА -->
+            <!--div style="display: flex;justify-content: right;">
+                <h4 th:object="${user}" th:text="${user}" style="color: black;float: left;">>User:</h4>
+            </div-->
+            <form id="projectForm" th:action="@{/projects}" th:object="${project}" method="post">
                 <div th:if="${#fields.hasErrors('*')}"
                      class="alert alert-error" >
                     <p th:each="error : ${#fields.errors('*')}"
@@ -62,7 +60,10 @@
                         Validation error
                     </p>
                 </div>
-                <label for="name" style="margin-top: 50px; font-size: 22px; color: grey">Put name of new project  </label>
+                <div style="height: 80px">
+                    <label for="name" style="margin-top: 50px; font-size: 22px; color: grey">Put name of new project  </label>
+                </div>
+
                 <div class="navbar" style="display: flex; justify-content: space-between;">
                     <input class="" type="text"
                            th:field="*{name}"
@@ -70,65 +71,68 @@
                     <div class="form-actions">
                         <!--input type="submit" value="CREATE" style="margin-top: 5px"/-->
                         <button class="btn btn-lg btn-primary btn-block" type="submit"
-                                style="height: 45px; text-align: center; margin-left: 420px;">CREATE</button>
+                                style="height: 50px; text-align: center; margin-left: 420px;">CREATE</button>
                     </div>
-                    <div>
-                        <!-- Кнопка для модального окна  -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-                                style="height: 45px;text-align: center;width: 100px;">JOIN</button>
-                        <!-- Модальное окно -->
-                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <!-- ФОРМА ДЛЯ ВВОДА КОДА-->
-                                    <form th:action="@{/projects/join}" th:object="${code}" method="post">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="staticBackdropLabel">Enter the code of the project you want to join</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">Project Code</span>
-                                                <input type="text" class="form-control" placeholder="Code" aria-label="Hash code" aria-describedby="basic-addon1">
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary">Join project</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </form>
+            <div>
+                <!-- Кнопка для модального окна  -->
+                
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                        style="height: 50px;text-align: center;width: 100px;">JOIN</button>
+                <!-- Модальное окно -->
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <!-- ФОРМА ДЛЯ ВВОДА КОДА-->
+                            <form th:action="@{/projects/join}" th:object="${project}" method="post">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel">Enter the code of the project you want to join</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">Project Code</span>
+                                        <input th:field="*{code}" type="text" class="form-control" placeholder="Code"
+                                               aria-label="Project code" aria-describedby="basic-addon1">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Join project</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            <div th:if="${projects.empty}" >
+            <div th:if="${projects.empty}" style="margin-top: 24px; font-size: 25px; color: crimson; text-align: -webkit-center;">
                 You haven't created a project yet
             </div>
             <div th:each="project : ${projects}">
 
-            <div class="col" style="padding: 15px; display:flex;">
-
+            <div class="col" style="padding: 15px;display:flex;background-color: whitesmoke;">
                 <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg"
                      style="background-image: url('unsplash-photo-1.jpg'); width: 550px; display:flex">
-                    <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                    <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1" style="background: lightblue;">
                         <a th:href="@{/projects/__${project.id}__}">
                             <small class="d-block text-muted">
                                 <svg class="bi me-1" width="1em" height="1em">Name: </svg>
                             </small>
                             <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold" th:text="${project.name}"></h2>
+                            <!--h5 th:text="${project.code}">Code:</h5-->
                         </a>
                         <ul class="d-flex list-unstyled mt-auto">
                             <li class="d-flex align-items-center me-3">
                                 <svg class="bi me-1" width="1em" height="1em"><use xlink:href="#geo-fill"></use></svg>
-                                <small>Contributors</small>
+                                <!-- !!!! -->
+<!--                                <small>Contributors: <small th:object="${number}" th:text="${number}"></small></small>-->
                             </li>
                             <li class="d-flex align-items-center">
                                 <svg class="bi me-1" width="1em" height="1em"><use xlink:href="#calendar3"></use></svg>
-                                <small>Public</small>
+                                <!-- !!!! -->
+<!--                                <small th:object="${owner}" th:text="${owner}" style="color: black">Contributors: </small>-->
                             </li>
                         </ul>
                     </div>
@@ -136,36 +140,7 @@
             </div>
             </div>
         </div>
+        <p class="mt-5 mb-3 text-muted">© TeamService 2021</p>
     </main>
-    <!--header class="py-3 mb-4 border-bottom">
-        <div class="navbar" style="display: flex; justify-content: space-between; background"-->
-        <!--div class="container d-flex flex-wrap justify-content-center">
-            <a href="/" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
-                <svg class="bi me-2" width="40" height="32" enable-background="red" ><use xlink:href="#bootstrap"></use></svg>
-                <span class="fs-4" for="name">Name of project</span>
-            </a>
-
-    <div layout:fragment="content" class="container"-->
-        <!--form id="projectForm"
-              th:action="@{/projects}"
-              th:object="${project}"
-              method="post">
-            <div th:if="${#fields.hasErrors('*')}"
-                 class="alert alert-error">
-                <p th:each="error : ${#fields.errors('*')}"
-                   th:text="${error}">
-                    Validation error
-                </p>
-            </div>
-            <label for="name">Name of project</label>
-            <input type="text"
-                   th:field="*{name}"
-                   th:class="${#fields.hasErrors('name')} ? 'field-error'"/>
-            <div class="form-actions">
-                <input type="submit" value="CREATE"/>
-            </div>
-        </form-->
-
-
 </body>
 </html>

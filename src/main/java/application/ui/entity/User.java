@@ -5,8 +5,11 @@ import lombok.Setter;
 import javax.validation.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class User {
@@ -19,22 +22,27 @@ public class User {
 
     @Getter
     @Setter
-    @NotEmpty(message = "Email is required.")
+    @NotNull
     private String email;
 
     @Getter
     @Setter
-    @NotEmpty(message = "Password is required.")
-    private String hashedPassword;
+    @NotNull
+    private String password;
 
-//    @Getter
-//    @Setter
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
-//    private List<Project> ownedProjects = new ArrayList<>();
-//
-//    @Getter
-//    @Setter
-//    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users")
-//    private List<Project> projects = new ArrayList<>();
+    @Getter
+    @Setter
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
+    private List<Project> ownedProjects = new ArrayList<>();
+
+    @Getter
+    @Setter
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users")
+    private Set<Project> projects = new HashSet<>();
+
+    @Getter
+    @Setter
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
+    private List<Comment> comments;
 
 }

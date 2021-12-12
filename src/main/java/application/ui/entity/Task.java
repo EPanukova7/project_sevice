@@ -5,6 +5,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Task {
@@ -17,25 +20,30 @@ public class Task {
 
     @Getter
     @Setter
-    @NotEmpty(message = "Name is required.")
+    @NotNull
     private String name;
 
     @Getter
     @Setter
-    @NotEmpty(message = "Description is required.")
+    @NotNull
     private String description;
 
     @Getter
     @Setter
-//    @NotEmpty(message = "State is required.")
+    @NotNull
     @Column(columnDefinition = "boolean default false")
     private boolean state;
 
     @Getter
     @Setter
-    @NotEmpty
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id", referencedColumnName = "id", nullable = false)
     private Project project;
+
+    @Getter
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "task")
+    private List<Comment> comments = new ArrayList<>();
+
 
 }
