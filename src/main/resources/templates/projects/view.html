@@ -45,8 +45,13 @@
 <body>
     <div layout:fragment="content" class="container">
         <header th:insert="layout :: header"></header>
+        <div class="pb-2 border-bottom" style="display: flex; justify-content: space-between; margin-top: 40px;">
+            <h2 id="name" th:text="${project.name}"></h2>
+            <div style="font-size: 20px;font-weight: bold;display: flex;width: 170px;justify-content: space-between;">Code:
+            <h5 style="margin-top=5px;
+            font-weight=400; color=skyblue" th:text="${project.code}"></h5></div>
+        </div>
 
-        <h4 id="name" th:text="${project.name}" class="pb-2 border-bottom" style="margin-top: 25px"></h4>
         <!-- ВЫВОДИМ СОЗДАТЕЛЯ ПРОЕКТА -->
             <div style="float: right; width: 250px;">
                 <div style="text-align: right; color: lightblue;">
@@ -60,7 +65,6 @@
                     <div th:each="user : ${usersProject}" style="text-align: right; color: lightblue;" >
                         <p th:text="${user.email}" style="font-size: 17px; color: black;"></p>
                     </div>
-
                 </div>
             </div>
             <div>
@@ -84,6 +88,7 @@
                                                     <svg class="bi me-1" width="1em" height="1em">Description: </svg>
                                             </small>
                                         </span>
+                                        <button th:href="@{/projects/__${project.id}__/tasks/view/__${task.id}__}" >Comment</button>
                                 </label>
                             </div>
                         </ul>
@@ -92,6 +97,7 @@
 
                 </form>
             </div>
+        <p class="mt-5 mb-3 text-muted">© TeamService 2021</p>
 </div>
 </body>
 </html>

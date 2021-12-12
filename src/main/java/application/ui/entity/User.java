@@ -40,4 +40,9 @@ public class User {
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users")
     private Set<Project> projects = new HashSet<>();
 
+    @Getter
+    @Setter
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
+    private List<Comment> comments;
+
 }

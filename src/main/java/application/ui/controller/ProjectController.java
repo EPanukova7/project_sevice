@@ -67,6 +67,7 @@ public class ProjectController {
         params.put("usersProject", users);
         String userEmail = UserService.getById(userId).getEmail();
         params.put("user", userEmail);
+        //params.put("code", project.getCode());
         params.put("project", project);
         params.put("tasks", tasks);
         return new ModelAndView("projects/view", params);
