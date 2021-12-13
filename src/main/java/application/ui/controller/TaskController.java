@@ -1,14 +1,16 @@
 package application.ui.controller;
 
+import application.ui.entity.Comment;
 import application.ui.entity.Project;
 import application.ui.entity.Task;
+import application.ui.entity.User;
+import application.ui.service.CommentService;
 import application.ui.service.TaskService;
-import org.springframework.beans.factory.annotation.Autowired;
+import application.ui.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -16,34 +18,50 @@ import java.util.HashMap;
 @Controller
 public class TaskController {
 
-    @GetMapping(value = "/projects/{project_id}/tasks/create")
-    public ModelAndView createForm(@PathVariable("project_id") Project project, @ModelAttribute Task task) {
+    @GetMapping(value = "/projects/{projectId}/tasks/create")
+    public ModelAndView create_get(@PathVariable("projectId") Project project, @ModelAttribute Task task) {
         HashMap<String, Object> params = new HashMap<>();
         params.put("project", project);
         return new ModelAndView("tasks/create", params);
     }
 
-    @PostMapping(value = "/projects/{project_id}/tasks/create")
-    public ModelAndView create(@PathVariable("project_id") Project project,
-                               @Valid Task task, BindingResult result,
-                               RedirectAttributes redirect) {
+    @PostMapping(value = "/projects/{projectId}/tasks/create")
+    public ModelAndView create_post(@PathVariable("projectId") Project project,
+                                    @Valid Task task,
+                                    BindingResult result) {
         if (result.hasErrors()) {
             return new ModelAndView("tasks/create", "formErrors", result.getAllErrors());
         }
         task = TaskService.create(project, task);
         HashMap<String, Object> params = new HashMap<>();
-        params.put("project_id", project.getId());
-        params.put("task_id", task.getId());
-        redirect.addFlashAttribute("globalTask", "Successfully created a new task");
-        return new ModelAndView("redirect:/projects/{project_id}/tasks/{task_id}", params);
+        params.put("projectId", project.getId());
+        params.put("taskId", task.getId());
+        return new ModelAndView("redirect:/projects/{projectId}/tasks/{taskId}", params);
     }
 
-    @GetMapping(value = "/projects/{project_id}/tasks/{task_id}")
-    public ModelAndView view(@PathVariable("project_id") Project project,
-                             @PathVariable("task_id") Task task) {
+    @GetMapping(value = "/projects/{projectId}/tasks/{taskId}")  // Вроде решили на эту страницу передавать комменты
+    public ModelAndView view_get(@PathVariable("projectId") Project project,
+                                 @PathVariable("taskId") Task task,
+                                 @ModelAttribute Comment comment,
+                                 @CookieValue(value = "userId", defaultValue = "-1") int userId) {
         HashMap<String, Object> params = new HashMap<>();
+        User user = UserService.getById(userId);
         params.put("project", project);
         params.put("task", task);
+        params.put("comments", CommentService.getAllByTaskId(task.getId()));
         return new ModelAndView("tasks/view", params);
+    }
+
+    @PostMapping(value = "projects/{projectId}/tasks/{taskId}")
+    public ModelAndView createComment(@PathVariable("projectId") Project project,
+                                      @PathVariable("taskId") Task task,
+                                      @Valid Comment comment,
+                                      @CookieValue(value = "userId", defaultValue = "-1") int userId) {
+        HashMap<String, Object> params = new HashMap<>();
+        comment = CommentService.create(project, task, UserService.getById(userId), comment);
+        params.put("project", project);
+        params.put("task", task);
+        params.put("comments", CommentService.getAllByTaskId(task.getId()));
+        return new ModelAndView("redirect:/projects/{projectId}/tasks/{taskId}", params);
     }
 }
