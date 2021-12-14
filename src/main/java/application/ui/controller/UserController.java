@@ -25,18 +25,22 @@ public class UserController {
         User dbUser = UserService.getByEmail(user.getEmail());
         // TODO: hash password
         if (dbUser == null) {
-            if (!isCorrectEmail(user.getEmail())){
+            if (!user.getEmail().contains("@") || !user.getEmail().contains(".")){
                 return new ModelAndView("users/login", "error", "Incorrect email");
             }
-            dbUser = UserService.create(user);
         } else if (!dbUser.getPassword().equals(user.getPassword())) {
             return new ModelAndView("users/login", "error", "Wrong password");
         }
-        Cookie cookie = new Cookie("userId", dbUser.getId().toString());
+        User newUser = new User();
+        newUser.setEmail(user.getEmail());
+        newUser.setPassword(user.getPassword());
+        UserService.create(newUser);
+        // сохранили в бд -> создался ID
+        Cookie cookie = new Cookie("userId", newUser.getId().toString());
         cookie.setMaxAge(3600);
         cookie.setSecure(true);
         response.addCookie(cookie);
-        return new ModelAndView("redirect:/projects", "user", dbUser);
+        return new ModelAndView("redirect:/projects", "user", newUser);
     }
 
     @GetMapping(value = "/login")
