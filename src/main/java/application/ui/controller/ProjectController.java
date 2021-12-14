@@ -16,8 +16,13 @@ import java.util.HashMap;
 
 @Controller
 public class ProjectController {
+    @GetMapping(value = "/")
+    public ModelAndView index() {
+        return new ModelAndView("redirect:projects");
+    }
+
     @GetMapping(value = "/projects")
-    public ModelAndView list_get( @ModelAttribute Project project, @CookieValue(value = "userId", defaultValue = "-1") int userId) {
+    public ModelAndView list_get(@ModelAttribute Project project, @CookieValue(value = "userId", defaultValue = "-1") int userId) {
         if (userId == -1) {
             return new ModelAndView("redirect:login");
         }
@@ -86,4 +91,14 @@ public class ProjectController {
         project = ProjectService.addUser(project, user);
         return new ModelAndView("redirect:/projects/{projectId}", "projectId", project.getId());
     }
+
+//    @PostMapping(value = "projects/{projectId}/tasks/{taskId}")
+//    public ModelAndView delete(@PathVariable("projectId") Project project,
+//                               @PathVariable("taskId") Task task,
+//                               @PathVariable("commentId") Comment comment,
+//                               @CookieValue(value = "userId", defaultValue = "-1") int userId) {
+//        Comment comment1 = CommentService.getById(Integer.parseInt(comment.getId().toString()));
+//        CommentService.delete(comment1);
+//        return new ModelAndView("redirect:/projects/{projectId}/tasks/{taskId}");
+//    }
 }

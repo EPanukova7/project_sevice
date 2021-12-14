@@ -47,17 +47,16 @@
         <header th:insert="layout :: header"></header>
         <div class="pb-2 border-bottom" style="display: flex; justify-content: space-between; margin-top: 40px;">
             <h2 id="name" th:text="${project.name}"></h2>
-            <div style="font-size: 20px;font-weight: bold;display: flex;width: 170px;justify-content: space-between;">Code:
-            <h5 style="margin-top=5px;
-            font-weight=400; color=skyblue" th:text="${project.code}"></h5></div>
+            <div style="font-size: 20px;font-weight: bold;display: flex; justify-content: space-between;">Code:
+            <h5 style="margin-top=5px;  font-weight=400; color=skyblue" th:text="${project.code}"></h5></div>
         </div>
 
         <!-- ВЫВОДИМ СОЗДАТЕЛЯ ПРОЕКТА -->
-            <div style="float: right; width: 250px;">
+            <div style="float: right; width: 350px;">
                 <div style="text-align: right; color: lightblue;">
                     <h5 style="color: black; float: left; margin-right: 10px;">
                         Owner: </h5>
-                    <div> <p th:object="${owner}" th:text="${owner}" style="font-size: 17px; color: blue;"></p></div>
+                    <div> <p th:object="${owner}" th:text="${owner}" style="font-size: 17px; color: blue; "></p></div>
                 </div>
             <!-- ВЫВОДИМ УЧАСТНИКОВ ПРОЕКТА -->
                 <div>
@@ -80,15 +79,15 @@
                                     <label class="list-group-item d-flex gap-3">
                                         <input class="form-check-input flex-shrink-0" type="checkbox" value="" checked="" style="font-size: 1.375em;">
                                         <span class="pt-1 form-checked-content">
-                                              <strong th:text="${task.name}"></strong>
+                                              <strong th:text="${task.name}" style="text-transform: capitalize;"></strong>
                                                 <small th:text="${task.state}" class="d-block text-muted">
                                                     <svg class="bi me-1" width="1em" height="1em">Status: </svg>
                                                 </small>
-                                                <small th:text="${task.description}" class="d-block text-muted">
+                                                <small th:text="${task.description}" style="text-transform: capitalize;" class="d-block text-muted">
                                                     <svg class="bi me-1" width="1em" height="1em">Description: </svg>
                                             </small>
                                         </span>
-                                        <button th:href="@{/projects/__${project.id}__/tasks/view/__${task.id}__}" >Comment</button>
+                                        <a th:href="@{/projects/__${project.id}__/tasks/__${task.id}__}">Comment</a>
                                 </label>
                             </div>
                         </ul>
