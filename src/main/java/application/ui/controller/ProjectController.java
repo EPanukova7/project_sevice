@@ -16,8 +16,13 @@ import java.util.HashMap;
 
 @Controller
 public class ProjectController {
+    @GetMapping(value = "/")
+    public ModelAndView index() {
+        return new ModelAndView("redirect:projects");
+    }
+
     @GetMapping(value = "/projects")
-    public ModelAndView list_get( @ModelAttribute Project project, @CookieValue(value = "userId", defaultValue = "-1") int userId) {
+    public ModelAndView list_get(@ModelAttribute Project project, @CookieValue(value = "userId", defaultValue = "-1") int userId) {
         if (userId == -1) {
             return new ModelAndView("redirect:login");
         }

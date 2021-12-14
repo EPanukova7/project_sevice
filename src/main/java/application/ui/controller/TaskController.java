@@ -7,16 +7,13 @@ import application.ui.entity.User;
 import application.ui.service.CommentService;
 import application.ui.service.TaskService;
 import application.ui.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.HashMap;
-import java.util.Map;
 
 @Controller
 public class TaskController {
@@ -44,13 +41,27 @@ public class TaskController {
 
     @GetMapping(value = "/projects/{projectId}/tasks/{taskId}")  // Вроде решили на эту страницу передавать комменты
     public ModelAndView view_get(@PathVariable("projectId") Project project,
-                                 @PathVariable("taskId") Task task, @Valid Comment comment, @CookieValue(value = "userId", defaultValue = "-1") int userId) {
+                                 @PathVariable("taskId") Task task,
+                                 @ModelAttribute Comment comment,
+                                 @CookieValue(value = "userId", defaultValue = "-1") int userId) {
         HashMap<String, Object> params = new HashMap<>();
         User user = UserService.getById(userId);
-        comment = CommentService.create(project, task, user, comment);
         params.put("project", project);
         params.put("task", task);
-        params.put("comment", comment);
+        params.put("comments", CommentService.getAllByTaskId(task.getId()));
         return new ModelAndView("tasks/view", params);
+    }
+
+    @PostMapping(value = "projects/{projectId}/tasks/{taskId}")
+    public ModelAndView createComment(@PathVariable("projectId") Project project,
+                                      @PathVariable("taskId") Task task,
+                                      @Valid Comment comment,
+                                      @CookieValue(value = "userId", defaultValue = "-1") int userId) {
+        HashMap<String, Object> params = new HashMap<>();
+        comment = CommentService.create(project, task, UserService.getById(userId), comment);
+        params.put("project", project);
+        params.put("task", task);
+        params.put("comments", CommentService.getAllByTaskId(task.getId()));
+        return new ModelAndView("redirect:/projects/{projectId}/tasks/{taskId}", params);
     }
 }
