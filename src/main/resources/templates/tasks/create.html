@@ -58,8 +58,12 @@
                         Validation error
                     </p>
                 </div>
-                <h2 class="pb-2 border-bottom" style="margin-top: 25px">Add new task</h2>
-
+                <div class="pb-2 border-bottom" style="display: flex; justify-content: space-between; margin-top: 40px;">
+                    <h2>Add new task</h2>
+                    <div style="font-size: 20px;font-weight: bold;display: flex;width: 170px;justify-content: space-between;">Code:
+                        <h5 style="margin-top=5px;
+                        font-weight=400;" th:text="${project.code}"></h5></div>
+                </div>
                 <div class="form-floating">
                     <input type="text"
                            th:field="*{name}"

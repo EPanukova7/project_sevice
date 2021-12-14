@@ -16,8 +16,13 @@ import java.util.HashMap;
 
 @Controller
 public class ProjectController {
+    @GetMapping(value = "/")
+    public ModelAndView index() {
+        return new ModelAndView("redirect:projects");
+    }
+
     @GetMapping(value = "/projects")
-    public ModelAndView list_get( @ModelAttribute Project project, @CookieValue(value = "userId", defaultValue = "-1") int userId) {
+    public ModelAndView list_get(@ModelAttribute Project project, @CookieValue(value = "userId", defaultValue = "-1") int userId) {
         if (userId == -1) {
             return new ModelAndView("redirect:login");
         }
@@ -67,6 +72,7 @@ public class ProjectController {
         params.put("usersProject", users);
         String userEmail = UserService.getById(userId).getEmail();
         params.put("user", userEmail);
+        //params.put("code", project.getCode());
         params.put("project", project);
         params.put("tasks", tasks);
         return new ModelAndView("projects/view", params);
