@@ -24,14 +24,20 @@ public class UserController {
         }
         User dbUser = UserService.getByEmail(user.getEmail());
         // TODO: hash password
+
         if (dbUser == null) {
-            if (!isCorrectEmail(user.getEmail())){
+            if (!(user.getEmail().contains("@")) || !user.getEmail().contains(".")) {
                 return new ModelAndView("users/login", "error", "Incorrect email");
             }
-            dbUser = UserService.create(user);
+            User newUser = new User();
+            newUser.setEmail(user.getEmail());
+            newUser.setPassword(user.getPassword());
+            UserService.create(newUser);
+            dbUser = newUser;
         } else if (!dbUser.getPassword().equals(user.getPassword())) {
             return new ModelAndView("users/login", "error", "Wrong password");
         }
+
         Cookie cookie = new Cookie("userId", dbUser.getId().toString());
         cookie.setMaxAge(3600);
         cookie.setSecure(true);
