@@ -1,9 +1,7 @@
 package application.ui.service;
 
 import application.ui.entity.Project;
-import application.ui.entity.Task;
 import application.ui.entity.User;
-import application.ui.repository.TaskRepository;
 import application.ui.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,5 +30,9 @@ public class UserService {
 
     public static User create(User user){
         return userRepository.save(user);
+    }
+
+    public static void delete(User user) {
+        userRepository.delete(user);
     }
 }
