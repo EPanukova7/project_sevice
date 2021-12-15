@@ -1,5 +1,6 @@
 package application.ui.controller;
 
+import application.ui.Validation;
 import application.ui.entity.Project;
 import application.ui.entity.Task;
 import application.ui.entity.User;
@@ -28,6 +29,9 @@ public class TaskController {
                                     BindingResult result) {
         if (result.hasErrors()) {
             return new ModelAndView("tasks/create", "formErrors", result.getAllErrors());
+        }
+        if (!Validation.isCorrectName(task.getName())){
+            return new ModelAndView("projects/list", "error", "Incorrect task name. Use a-zA-Z0-9_-");
         }
         task = TaskService.create(project, task);
         HashMap<String, Object> params = new HashMap<>();

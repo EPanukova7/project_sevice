@@ -1,5 +1,6 @@
 package application.ui.controller;
 
+import application.ui.Validation;
 import application.ui.entity.Project;
 import application.ui.entity.Task;
 import application.ui.entity.User;
@@ -36,6 +37,9 @@ public class ProjectController {
         }
         if (result.hasErrors()) {
             return new ModelAndView("projects/list", "formErrors", result.getAllErrors());
+        }
+        if (!Validation.isCorrectName(project.getName())){
+            return new ModelAndView("projects/list", "error", "Incorrect project name. Use a-zA-Z0-9_-");
         }
         User user = UserService.getById(userId);
         // TODO: catch integrity error - not unique project name
