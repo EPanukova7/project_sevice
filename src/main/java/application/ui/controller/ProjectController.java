@@ -1,5 +1,6 @@
 package application.ui.controller;
 
+import application.ui.Validation;
 import application.ui.entity.Project;
 import application.ui.entity.Task;
 import application.ui.entity.User;
@@ -8,6 +9,7 @@ import application.ui.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -42,6 +44,9 @@ public class ProjectController {
                                     @CookieValue(value = "userId", defaultValue = "-1") int userId, Model model) {
         if (userId == -1) {
             return new ModelAndView("redirect:login");
+        }
+        if (!Validation.isCorrectName(project.getName())){
+            result.addError(new FieldError("project", "name", "Incorrect project name. Use a-zA-Z0-9_-"));
         }
         if (result.hasErrors()) {
             return new ModelAndView("projects/list", "formErrors", result.getAllErrors());
@@ -82,6 +87,9 @@ public class ProjectController {
     public ModelAndView join_post(@Valid Project project,
                                   BindingResult result,
                                   @CookieValue(value = "userId", defaultValue = "-1") int userId) {
+        if (userId == -1) {
+            return new ModelAndView("redirect:login");
+        }
         // TODO: pass "owner" from frontend;
         if (result.hasErrors()) {
             return new ModelAndView("projects/list", "formErrors", result.getAllErrors());
@@ -91,4 +99,14 @@ public class ProjectController {
         project = ProjectService.addUser(project, user);
         return new ModelAndView("redirect:/projects/{projectId}", "projectId", project.getId());
     }
+
+//    @PostMapping(value = "projects/{projectId}/tasks/{taskId}")
+//    public ModelAndView delete(@PathVariable("projectId") Project project,
+//                               @PathVariable("taskId") Task task,
+//                               @PathVariable("commentId") Comment comment,
+//                               @CookieValue(value = "userId", defaultValue = "-1") int userId) {
+//        Comment comment1 = CommentService.getById(Integer.parseInt(comment.getId().toString()));
+//        CommentService.delete(comment1);
+//        return new ModelAndView("redirect:/projects/{projectId}/tasks/{taskId}");
+//    }
 }

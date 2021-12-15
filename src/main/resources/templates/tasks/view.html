@@ -48,26 +48,12 @@
 <body>
 <div layout:fragment="content" class="container">
     <header th:insert="layout :: header"></header>
-    <div class="modal modal-sheet position-static d-block py-5" style="background: SkyBlue;" tabindex="-1" role="dialog"
+    <div class="modal modal-sheet position-static d-block " style="background: SkyBlue; weight: 350px" tabindex="-1" role="dialog"
          id="modalSheet">
-        <div class="modal-dialog" role="document">
-            <h2 class="fw-bold mb-0">Your task has been successfully created</h2>
-            <ul class="d-grid gap-4 my-5 list-unstyled">
-                <li class="d-flex gap-4">
-                    <div>
-                        <h5 class="mb-0">Task-Id</h5>
-                        <dd id="id" th:text="${task.id}"></dd>
-                    </div>
-                </li>
-                <li class="d-flex gap-4">
-                    <div>
-                        <h5 class="mb-0">Task Title</h5>
-                        <dd id="name"
-                            th:text="${task.name}">
-                        </dd>
-                    </div>
-                </li>
-            </ul>
+        <h3 class="fw-bold mb-0"id="name" th:text="${task.name}" style="background: white;text-transform: capitalize;"></h3>
+        <div style="height: 250px">
+            <h6 id="description" th:text="${task.description}"
+                style="margin-top: 15px;margin-left: 10px;text-transform: capitalize;"></h6>
         </div>
     </div>
     <form th:action="@{/projects/__${project.id}__}">
@@ -109,16 +95,26 @@
                  style="margin-top: 24px; font-size: 25px; color: crimson; text-align: -webkit-center;">
                 Chat is empty right now
             </div>
+            <div class="alert alert-error" style="font-weight: bold; color: darkred;">
+                <p th:text="${error}"></p>
+            </div>
             <div th:each="comment : ${comments}" class="list-group">
                 <label class="list-group-item d-flex gap-3">
-                    <input class="form-check-input flex-shrink-0" type="checkbox" value="" checked=""
-                           style="font-size: 1.375em;">
-                    <span class="pt-1 form-checked-content">
-                                              <strong th:text="${comment.commentText}"></strong>
-                                                <small th:text="${comment.owner.email}" class="d-block text-muted">
-                                                    <svg class="bi me-1" width="1em" height="1em">Status: </svg>
-                                                </small>
-                                        </span>
+                    <span class="pt-1 form-checked-content" style="width: 1200px">
+                        <form th:action="@{/projects/__${project.id}__/tasks/__${task.id}__/comments/__${comment.id}__}"
+                              method="post">
+<!--                            <input name="commentId" type="hidden" th:field="${comment}">-->
+                            <strong th:text="${comment.commentText}" style="text-transform: capitalize;"></strong>
+                                <small th:text="${comment.owner.email}" class="d-block text-muted">
+                                    <svg class="bi me-1" width="1em" height="1em"> </svg>
+                                </small>
+                            <div class="form-actions" style="display: flex; justify-content: end">
+                                <button class="btn btn-lg btn-primary btn-block" type="submit"
+                                        style="height: 40px; text-align: center; margin-left: 420px;">DELETE
+                                </button>
+                          </div>
+                        </form>
+                    </span>
                 </label>
             </div>
         </ul>
