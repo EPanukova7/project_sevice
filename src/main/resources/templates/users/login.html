@@ -223,7 +223,9 @@
     <div class="wrapper fadeInDown">
         <div id="formContent" class="wrapper fadeInDown" style="height: 260px">
             <!-- Login Form -->
+            <h3 style="align-content: center"> Registration Form</h3>
             <form id="userForm" th:action="@{/login}" th:object="${user}" method="post">
+
                 <div th:if="${#fields.hasErrors('*')}"
                      class="alert alert-error">
                     <p th:each="error : ${#fields.errors('*')}"

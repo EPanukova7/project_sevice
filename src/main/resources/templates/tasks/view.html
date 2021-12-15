@@ -12,7 +12,8 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/headers/">
 
     <!-- Bootstrap core CSS -->
-    <link href="/docs/5.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="/docs/5.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" href="/docs/5.1/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
@@ -25,51 +26,96 @@
 
 
     <style>
-          .bd-placeholder-img {
+        .bd-placeholder-img {
             font-size: 1.125rem;
             text-anchor: middle;
             -webkit-user-select: none;
             -moz-user-select: none;
             user-select: none;
-          }
+        }
 
-          @media (min-width: 768px) {
+        @media (min-width: 768px) {
             .bd-placeholder-img-lg {
-              font-size: 3.5rem;
+                font-size: 3.5rem;
             }
-          }
-        </style>
+        }
+    </style>
 
     <!-- Custom styles for this template -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 <body>
-    <div layout:fragment="content" class="container">
-        <header th:insert="layout :: header"></header>
-            <div class="modal modal-sheet position-static d-block py-5" style="background: SkyBlue;" tabindex="-1" role="dialog" id="modalSheet">
-                    <div class="modal-dialog" role="document">
-                            <h2 class="fw-bold mb-0">Your task has been successfully created</h2>
-                            <ul class="d-grid gap-4 my-5 list-unstyled">
-                                <li class="d-flex gap-4">
-                                    <div>
-                                        <h5 class="mb-0">Task-Id</h5>
-                                        <dd id="id" th:text="${task.id}"></dd>
-                                    </div>
-                                </li>
-                                <li class="d-flex gap-4">
-                                    <div>
-                                        <h5 class="mb-0">Task Title</h5>
-                                        <dd id="name"
-                                            th:text="${task.name}">
-                                        </dd>
-                                    </div>
-                                </li>
-                            </ul>
-                    </div>
-                </div>
-            <form th:action="@{/projects/__${project.id}__}">
-                <button class="btn btn-lg btn-primary" type="submit" style="margin-top: 20px; width: 100px; height: 50px;">BACK</button>
-            </form>
+<div layout:fragment="content" class="container">
+    <header th:insert="layout :: header"></header>
+    <div class="modal modal-sheet position-static d-block " style="background: SkyBlue; weight: 350px" tabindex="-1" role="dialog"
+         id="modalSheet">
+        <h3 class="fw-bold mb-0"id="name" th:text="${task.name}" style="background: white;text-transform: capitalize;"></h3>
+        <div style="height: 250px">
+            <h6 id="description" th:text="${task.description}"
+                style="margin-top: 15px;margin-left: 10px;text-transform: capitalize;"></h6>
+        </div>
     </div>
+    <form th:action="@{/projects/__${project.id}__}">
+        <button class="btn btn-lg btn-primary" type="submit" style="margin-top: 20px; width: 100px; height: 50px;">
+            BACK
+        </button>
+    </form>
+
+    <form id="projectForm" th:action="@{/projects/__${project.id}__/tasks/__${task.id}__}" th:object="${comment}"
+          method="post">
+        <div th:if="${#fields.hasErrors('*')}"
+             class="alert alert-error">
+            <p th:each="error : ${#fields.errors('*')}"
+               th:text="${error}">
+                Validation error
+            </p>
+        </div>
+        <div style="height: 80px">
+            <label for="commentText" style="margin-top: 50px; font-size: 22px; color: grey">Put of new comment </label>
+        </div>
+
+        <div class="navbar" style="display: flex; justify-content: space-between;">
+            <input class="" type="text"
+                   th:field="*{commentText}"
+                   th:class="${#fields.hasErrors('commentText')} ? 'field-error'" placeholder=" project commentText"
+                   style="margin-top: 5px; width: 600px; height: 45px"/>
+            <div class="form-actions">
+                <!--input type="submit" value="CREATE" style="margin-top: 5px"/-->
+                <button class="btn btn-lg btn-primary btn-block" type="submit"
+                        style="height: 50px; text-align: center; margin-left: 420px;">SEND
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <div class="chat">
+        <ul>
+            <div th:if="${comments.empty}"
+                 style="margin-top: 24px; font-size: 25px; color: crimson; text-align: -webkit-center;">
+                Chat is empty right now
+            </div>
+            <div th:each="comment : ${comments}" class="list-group">
+                <label class="list-group-item d-flex gap-3">
+                    <span class="pt-1 form-checked-content" style="width: 1200px">
+<!--                        <form th:action="@{/projects/__${project.id}__/tasks/__${task.id}__}"  th:method="delete">-->
+<!--                            <input name="commentId" type="hidden" th:field="${comment}">-->
+                            <strong th:text="${comment.commentText}" style="text-transform: capitalize;"></strong>
+                                <small th:text="${comment.owner.email}" class="d-block text-muted">
+                                    <svg class="bi me-1" width="1em" height="1em"> </svg>
+                                </small>
+                            <div class="form-actions" style="display: flex; justify-content: end">
+                            <button class="btn btn-lg btn-primary btn-block" type="submit"
+                                    style="height: 40px; text-align: center; margin-left: 420px;">DELETE
+                            </button>
+                        </div>
+<!--                          </form>-->
+                    </span>
+                </label>
+            </div>
+        </ul>
+    </div>
+</div>
+<p class="mt-5 mb-3 text-muted">© TeamService 2021</p>
 </body>
 </html>

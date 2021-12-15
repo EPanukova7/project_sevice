@@ -1,6 +1,5 @@
 package application.ui.controller;
 
-import application.ui.Validation;
 import application.ui.entity.User;
 import application.ui.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -26,22 +25,22 @@ public class UserController {
         User dbUser = UserService.getByEmail(user.getEmail());
         // TODO: hash password
         if (dbUser == null) {
-            if (!Validation.isCorrectEmail(user.getEmail())){
+            if (!user.getEmail().contains("@") || !user.getEmail().contains(".")){
                 return new ModelAndView("users/login", "error", "Incorrect email");
             }
-            if (!Validation.isCorrectPassword(user.getPassword())){
-                return new ModelAndView("users/login",
-                        "error", "Password must be between 6 and 64 symbols");
-            }
-            dbUser = UserService.create(user);
         } else if (!dbUser.getPassword().equals(user.getPassword())) {
             return new ModelAndView("users/login", "error", "Wrong password");
         }
-        Cookie cookie = new Cookie("userId", dbUser.getId().toString());
+        User newUser = new User();
+        newUser.setEmail(user.getEmail());
+        newUser.setPassword(user.getPassword());
+        UserService.create(newUser);
+        // сохранили в бд -> создался ID
+        Cookie cookie = new Cookie("userId", newUser.getId().toString());
         cookie.setMaxAge(3600);
         cookie.setSecure(true);
         response.addCookie(cookie);
-        return new ModelAndView("redirect:/projects", "user", dbUser);
+        return new ModelAndView("redirect:/projects", "user", newUser);
     }
 
     @GetMapping(value = "/login")
@@ -52,5 +51,16 @@ public class UserController {
     private static String hashPassword(String password) {
         // TODO
         return "";
+    }
+
+    private static boolean isCorrectEmail(String url){
+        String pattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\\\.[A-Za-z0-9-]+)*(\\\\.[A-Za-z]{2,})$";
+        return patternMatches(url, pattern);
+    }
+
+    private static boolean patternMatches(String string, String regexPattern) {
+        return Pattern.compile(regexPattern)
+                .matcher(string)
+                .matches();
     }
 }

@@ -48,11 +48,10 @@
         <div class="container px-4 py-5 " id="custom-cards">
             <header th:insert="layout :: header"></header>  <!--из лоя вставила хедер -->
             <h2 class="pb-2 border-bottom" style="margin-top: 25px">All active projects</h2>
-            <!-- ВЫВОДИМ НАШЕГО ЮЗЕРА  -->
-            <div style="text-align: right; color: lightblue;">
-                <h5>User: </h5>
-<!--                <label th:text="${user.email}">User: </label>-->
-            </div>
+            <!-- ВЫВОДИМ НАШЕГО ЮЗЕРА -->
+            <!--div style="display: flex;justify-content: right;">
+                <h4 th:object="${user}" th:text="${user}" style="color: black;float: left;">>User:</h4>
+            </div-->
             <form id="projectForm" th:action="@{/projects}" th:object="${project}" method="post">
                 <div th:if="${#fields.hasErrors('*')}"
                      class="alert alert-error" >
@@ -61,7 +60,10 @@
                         Validation error
                     </p>
                 </div>
-                <label for="name" style="margin-top: 50px; font-size: 22px; color: grey">Put name of new project  </label>
+                <div style="height: 80px">
+                    <label for="name" style="margin-top: 50px; font-size: 22px; color: grey">Put name of new project  </label>
+                </div>
+
                 <div class="navbar" style="display: flex; justify-content: space-between;">
                     <input class="" type="text"
                            th:field="*{name}"
@@ -75,6 +77,7 @@
             </form>
             <div>
                 <!-- Кнопка для модального окна  -->
+                
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
                         style="height: 50px;text-align: center;width: 100px;">JOIN</button>
                 <!-- Модальное окно -->
@@ -90,7 +93,8 @@
                                 <div class="modal-body">
                                     <div class="input-group mb-3">
                                         <span class="input-group-text" id="basic-addon1">Project Code</span>
-                                        <input th:field="*{code}" type="text" class="form-control" placeholder="Code" aria-label="Project code" aria-describedby="basic-addon1">
+                                        <input th:field="*{code}" type="text" class="form-control" placeholder="Code"
+                                               aria-label="Project code" aria-describedby="basic-addon1">
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -108,24 +112,27 @@
             </div>
             <div th:each="project : ${projects}">
 
-            <div class="col" style="padding: 15px; display:flex;">
+            <div class="col" style="padding: 15px;display:flex;background-color: whitesmoke;">
                 <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg"
                      style="background-image: url('unsplash-photo-1.jpg'); width: 550px; display:flex">
-                    <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                    <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1" style="background: lightblue;">
                         <a th:href="@{/projects/__${project.id}__}">
                             <small class="d-block text-muted">
                                 <svg class="bi me-1" width="1em" height="1em">Name: </svg>
                             </small>
-                            <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold" th:text="${project.name}"></h2>
+                            <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold" th:text="${project.name}" style="text-transform: capitalize;"></h2>
+                            <!--h5 th:text="${project.code}">Code:</h5-->
                         </a>
                         <ul class="d-flex list-unstyled mt-auto">
                             <li class="d-flex align-items-center me-3">
                                 <svg class="bi me-1" width="1em" height="1em"><use xlink:href="#geo-fill"></use></svg>
-                                <small>Contributors</small>
+                                <!-- !!!! -->
+<!--                                <small>Contributors: <small th:object="${number}" th:text="${number}"></small></small>-->
                             </li>
                             <li class="d-flex align-items-center">
                                 <svg class="bi me-1" width="1em" height="1em"><use xlink:href="#calendar3"></use></svg>
-                                <small>Public</small>
+                                <!-- !!!! -->
+<!--                                <small th:object="${owner}" th:text="${owner}" style="color: black">Contributors: </small>-->
                             </li>
                         </ul>
                     </div>
@@ -133,6 +140,7 @@
             </div>
             </div>
         </div>
+        <p class="mt-5 mb-3 text-muted">© TeamService 2021</p>
     </main>
 </body>
 </html>
