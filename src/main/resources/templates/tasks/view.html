@@ -95,21 +95,25 @@
                  style="margin-top: 24px; font-size: 25px; color: crimson; text-align: -webkit-center;">
                 Chat is empty right now
             </div>
+            <div class="alert alert-error" style="font-weight: bold; color: darkred;">
+                <p th:text="${error}"></p>
+            </div>
             <div th:each="comment : ${comments}" class="list-group">
                 <label class="list-group-item d-flex gap-3">
                     <span class="pt-1 form-checked-content" style="width: 1200px">
-<!--                        <form th:action="@{/projects/__${project.id}__/tasks/__${task.id}__}"  th:method="delete">-->
+                        <form th:action="@{/projects/__${project.id}__/tasks/__${task.id}__/comments/__${comment.id}__}"
+                              method="post">
 <!--                            <input name="commentId" type="hidden" th:field="${comment}">-->
                             <strong th:text="${comment.commentText}" style="text-transform: capitalize;"></strong>
                                 <small th:text="${comment.owner.email}" class="d-block text-muted">
                                     <svg class="bi me-1" width="1em" height="1em"> </svg>
                                 </small>
                             <div class="form-actions" style="display: flex; justify-content: end">
-                            <button class="btn btn-lg btn-primary btn-block" type="submit"
-                                    style="height: 40px; text-align: center; margin-left: 420px;">DELETE
-                            </button>
-                        </div>
-<!--                          </form>-->
+                                <button class="btn btn-lg btn-primary btn-block" type="submit"
+                                        style="height: 40px; text-align: center; margin-left: 420px;">DELETE
+                                </button>
+                          </div>
+                        </form>
                     </span>
                 </label>
             </div>

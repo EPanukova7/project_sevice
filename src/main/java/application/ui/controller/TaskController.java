@@ -10,9 +10,11 @@ import application.ui.service.TaskService;
 import application.ui.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.DirectFieldBindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -35,12 +37,12 @@ public class TaskController {
     @PostMapping(value = "/projects/{projectId}/tasks/create")
     public ModelAndView create_post(@PathVariable("projectId") Project project,
                                     @Valid Task task,
-                                    BindingResult result,
-                                    @CookieValue(value = "userId", defaultValue = "-1") int userId) {
+                                    @CookieValue(value = "userId", defaultValue = "-1") int userId,
+                                    BindingResult result) {
         if (userId == -1) {
             return new ModelAndView("redirect:login");
         }
-        if (!Validation.isCorrectName(task.getName())){
+        if (!Validation.isCorrectName(task.getName())) {
             result.addError(new FieldError("task", "name", "Incorrect task name. Use a-zA-Z0-9_-"));
         }
         if (result.hasErrors()) {
@@ -78,10 +80,28 @@ public class TaskController {
             return new ModelAndView("redirect:login");
         }
         HashMap<String, Object> params = new HashMap<>();
-        comment = CommentService.create(project, task, UserService.getById(userId), comment);
+        comment = CommentService.create(task, UserService.getById(userId), comment);
         params.put("project", project);
         params.put("task", task);
         params.put("comments", CommentService.getAllByTaskId(task.getId()));
         return new ModelAndView("redirect:/projects/{projectId}/tasks/{taskId}", params);
+    }
+
+    @PostMapping(value = "projects/{projectId}/tasks/{taskId}/comments/{commentId}")
+    public ModelAndView deleteComment(@PathVariable("projectId") Project project,
+                                      @PathVariable("taskId") Task task,
+                                      @PathVariable("commentId") Comment comment,
+                                      @CookieValue(value = "userId", defaultValue = "-1") int userId,
+                                      RedirectAttributes redirect) {
+        if (userId == -1) {
+            return new ModelAndView("redirect:login");
+        }
+        if (userId != comment.getOwner().getId()) {
+            redirect.addFlashAttribute("error", "Permission denied");
+            return new ModelAndView("redirect:/projects/{projectId}/tasks/{taskId}");
+        }
+
+        CommentService.deleteComment(comment);
+        return new ModelAndView("redirect:/projects/{projectId}/tasks/{taskId}");
     }
 }
