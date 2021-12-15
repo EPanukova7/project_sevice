@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 public class Validation {
 
     public static boolean isCorrectEmail(String url){
-        String pattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\\\.[A-Za-z0-9-]+)*(\\\\.[A-Za-z]{2,})$";
+        String pattern = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
         return patternMatches(url, pattern);
     }
 
@@ -15,8 +15,7 @@ public class Validation {
     }
 
     public static boolean isCorrectPassword(String password){
-        String pattern = "^{6,64}$";
-        return patternMatches(password, pattern);
+        return 6 <= password.length() && password.length() <= 64;
     }
 
     public static boolean patternMatches(String string, String regexPattern) {

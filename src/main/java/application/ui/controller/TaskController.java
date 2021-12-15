@@ -1,5 +1,6 @@
 package application.ui.controller;
 
+import application.ui.Validation;
 import application.ui.entity.Comment;
 import application.ui.entity.Project;
 import application.ui.entity.Task;
@@ -9,6 +10,7 @@ import application.ui.service.TaskService;
 import application.ui.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -19,7 +21,12 @@ import java.util.HashMap;
 public class TaskController {
 
     @GetMapping(value = "/projects/{projectId}/tasks/create")
-    public ModelAndView create_get(@PathVariable("projectId") Project project, @ModelAttribute Task task) {
+    public ModelAndView create_get(@PathVariable("projectId") Project project,
+                                   @ModelAttribute Task task,
+                                   @CookieValue(value = "userId", defaultValue = "-1") int userId) {
+        if (userId == -1) {
+            return new ModelAndView("redirect:login");
+        }
         HashMap<String, Object> params = new HashMap<>();
         params.put("project", project);
         return new ModelAndView("tasks/create", params);
@@ -28,7 +35,14 @@ public class TaskController {
     @PostMapping(value = "/projects/{projectId}/tasks/create")
     public ModelAndView create_post(@PathVariable("projectId") Project project,
                                     @Valid Task task,
-                                    BindingResult result) {
+                                    BindingResult result,
+                                    @CookieValue(value = "userId", defaultValue = "-1") int userId) {
+        if (userId == -1) {
+            return new ModelAndView("redirect:login");
+        }
+        if (!Validation.isCorrectName(task.getName())){
+            result.addError(new FieldError("task", "name", "Incorrect task name. Use a-zA-Z0-9_-"));
+        }
         if (result.hasErrors()) {
             return new ModelAndView("tasks/create", "formErrors", result.getAllErrors());
         }
@@ -44,6 +58,9 @@ public class TaskController {
                                  @PathVariable("taskId") Task task,
                                  @ModelAttribute Comment comment,
                                  @CookieValue(value = "userId", defaultValue = "-1") int userId) {
+        if (userId == -1) {
+            return new ModelAndView("redirect:login");
+        }
         HashMap<String, Object> params = new HashMap<>();
         User user = UserService.getById(userId);
         params.put("project", project);
@@ -57,6 +74,9 @@ public class TaskController {
                                       @PathVariable("taskId") Task task,
                                       @Valid Comment comment,
                                       @CookieValue(value = "userId", defaultValue = "-1") int userId) {
+        if (userId == -1) {
+            return new ModelAndView("redirect:login");
+        }
         HashMap<String, Object> params = new HashMap<>();
         comment = CommentService.create(project, task, UserService.getById(userId), comment);
         params.put("project", project);
