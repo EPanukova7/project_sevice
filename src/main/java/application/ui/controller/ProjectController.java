@@ -1,8 +1,10 @@
 package application.ui.controller;
 
+import application.ui.entity.Comment;
 import application.ui.entity.Project;
 import application.ui.entity.Task;
 import application.ui.entity.User;
+import application.ui.service.CommentService;
 import application.ui.service.ProjectService;
 import application.ui.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -92,13 +94,5 @@ public class ProjectController {
         return new ModelAndView("redirect:/projects/{projectId}", "projectId", project.getId());
     }
 
-//    @PostMapping(value = "projects/{projectId}/tasks/{taskId}")
-//    public ModelAndView delete(@PathVariable("projectId") Project project,
-//                               @PathVariable("taskId") Task task,
-//                               @PathVariable("commentId") Comment comment,
-//                               @CookieValue(value = "userId", defaultValue = "-1") int userId) {
-//        Comment comment1 = CommentService.getById(Integer.parseInt(comment.getId().toString()));
-//        CommentService.delete(comment1);
-//        return new ModelAndView("redirect:/projects/{projectId}/tasks/{taskId}");
-//    }
+
 }

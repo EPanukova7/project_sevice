@@ -58,10 +58,21 @@ public class TaskController {
                                       @Valid Comment comment,
                                       @CookieValue(value = "userId", defaultValue = "-1") int userId) {
         HashMap<String, Object> params = new HashMap<>();
-        comment = CommentService.create(project, task, UserService.getById(userId), comment);
+        CommentService.create(project, task, UserService.getById(userId), comment);
         params.put("project", project);
         params.put("task", task);
         params.put("comments", CommentService.getAllByTaskId(task.getId()));
         return new ModelAndView("redirect:/projects/{projectId}/tasks/{taskId}", params);
     }
+
+//    @DeleteMapping(value = "projects/{projectId}/tasks/{taskId}")
+//    public ModelAndView delete(@PathVariable("projectId") Project project,
+//                               @PathVariable("taskId") Task task,
+//                               @PathVariable("commentId") Comment comment,
+//                               @CookieValue(value = "userId", defaultValue = "-1") int userId) {
+//        Comment comment1 = CommentService.getById(Integer.parseInt(comment.getId().toString()));
+//        UserService.deleteComments(userId, comment1);
+//
+//        return new ModelAndView("redirect:/projects/{projectId}/tasks/{taskId}");
+//    }
 }

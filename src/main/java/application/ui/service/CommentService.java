@@ -43,7 +43,7 @@ public class CommentService {
         Task task = TaskService.getById(taskId);
         return task.getComments();
     }
-    public static void deleteComment(Comment comment) {
+    public static void delete(Comment comment) {
         commentRepository.delete(comment);
     }
 }

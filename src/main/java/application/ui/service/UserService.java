@@ -1,10 +1,13 @@
 package application.ui.service;
 
+import application.ui.entity.Comment;
 import application.ui.entity.Project;
 import application.ui.entity.User;
 import application.ui.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -29,11 +32,13 @@ public class UserService {
     }
 
     public static User create(User user){
-
         return userRepository.save(user);
     }
 
-    public static void delete(User user) {
-        userRepository.delete(user);
+    public static void deleteComments(Integer userId, Comment comment) {
+
+        List<Comment> comments = UserService.getById(userId).getComments();
+        comments.remove(comment);    // !!!
+        CommentService.delete(comment);
     }
 }
