@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 
 @Controller
 public class TaskController {
@@ -42,9 +43,9 @@ public class TaskController {
         if (userId == -1) {
             return new ModelAndView("redirect:login");
         }
-        if (!Validation.isCorrectName(task.getName())) {
-            result.addError(new FieldError("task", "name", "Incorrect task name. Use a-zA-Z0-9_-"));
-        }
+//        if (!Validation.isCorrectName(task.getName())) {
+//            result.addError(new FieldError("task", "name", "Incorrect task name. Use a-zA-Z0-9_-"));
+//        }
         if (result.hasErrors()) {
             return new ModelAndView("tasks/create", "formErrors", result.getAllErrors());
         }
@@ -65,6 +66,7 @@ public class TaskController {
         }
         HashMap<String, Object> params = new HashMap<>();
         User user = UserService.getById(userId);
+        params.put("user", user);
         params.put("project", project);
         params.put("task", task);
         params.put("comments", CommentService.getAllByTaskId(task.getId()));
@@ -81,6 +83,8 @@ public class TaskController {
         }
         HashMap<String, Object> params = new HashMap<>();
         comment = CommentService.create(task, UserService.getById(userId), comment);
+        User user1 = UserService.getById(userId);
+        params.put("user", user1);
         params.put("project", project);
         params.put("task", task);
         params.put("comments", CommentService.getAllByTaskId(task.getId()));

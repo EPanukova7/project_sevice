@@ -108,7 +108,7 @@
                                 <small th:text="${comment.owner.email}" class="d-block text-muted">
                                     <svg class="bi me-1" width="1em" height="1em"> </svg>
                                 </small>
-                            <div class="form-actions" style="display: flex; justify-content: end">
+                            <div th:if="${comment.owner.email == user.email}" class="form-actions" style="display: flex; justify-content: end">
                                 <button class="btn btn-lg btn-primary btn-block" type="submit"
                                         style="height: 40px; text-align: center; margin-left: 420px;">DELETE
                                 </button>

@@ -3,144 +3,164 @@
       xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
       xmlns:p="http://www.w3.org/1999/XSL/Transform"
       layout:decorator="layout">
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <title>Main Page</title>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>Main Page</title>
 
-        <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/headers/">
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/headers/">
 
-        <!-- Bootstrap core CSS -->
-        <link href="/docs/5.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <!-- Bootstrap core CSS -->
+    <link href="/docs/5.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+            integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+            integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+            crossorigin="anonymous"></script>
 
-        <!-- Favicons -->
-        <link rel="apple-touch-icon" href="/docs/5.1/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
-        <link rel="icon" href="/docs/5.1/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
-        <link rel="icon" href="/docs/5.1/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
-        <link rel="manifest" href="/docs/5.1/assets/img/favicons/manifest.json">
-        <link rel="mask-icon" href="/docs/5.1/assets/img/favicons/safari-pinned-tab.svg" color="#7952b3">
-        <link rel="icon" href="/docs/5.1/assets/img/favicons/favicon.ico">
-        <meta name="theme-color" content="#7952b3">
-        <style>
-          .bd-placeholder-img {
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="/docs/5.1/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
+    <link rel="icon" href="/docs/5.1/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="/docs/5.1/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
+    <link rel="manifest" href="/docs/5.1/assets/img/favicons/manifest.json">
+    <link rel="mask-icon" href="/docs/5.1/assets/img/favicons/safari-pinned-tab.svg" color="#7952b3">
+    <link rel="icon" href="/docs/5.1/assets/img/favicons/favicon.ico">
+    <meta name="theme-color" content="#7952b3">
+    <style>
+        .bd-placeholder-img {
             font-size: 1.125rem;
             text-anchor: middle;
             -webkit-user-select: none;
             -moz-user-select: none;
             user-select: none;
-          }
+        }
 
-          @media (min-width: 768px) {
+        @media (min-width: 768px) {
             .bd-placeholder-img-lg {
-              font-size: 3.5rem;
+                font-size: 3.5rem;
             }
-          }
-        </style>
+        }
+    </style>
 
-        <!-- Custom styles for this template -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    </head>
+    <!-- Custom styles for this template -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
 <body>
-    <main>
-        <div class="container px-4 py-5 " id="custom-cards">
-            <header th:insert="layout :: header"></header>  <!--из лоя вставила хедер -->
-            <h2 class="pb-2 border-bottom" style="margin-top: 25px">All active projects</h2>
-            <!-- ВЫВОДИМ НАШЕГО ЮЗЕРА -->
-            <!--div style="display: flex;justify-content: right;">
-                <h4 th:object="${user}" th:text="${user}" style="color: black;float: left;">>User:</h4>
-            </div-->
-            <form id="projectForm" th:action="@{/projects}" th:object="${project}" method="post">
-                <div th:if="${#fields.hasErrors('*')}"
-                     class="alert alert-error" >
-                    <p th:each="error : ${#fields.errors('*')}"
-                       th:text="${error}">
-                        Validation error
-                    </p>
-                </div>
-                <div style="height: 80px">
-                    <label for="name" style="margin-top: 50px; font-size: 22px; color: grey">Put name of new project  </label>
-                </div>
+<main>
+    <div class="container px-4 py-5 " id="custom-cards">
+        <header th:insert="layout :: header"></header>  <!--из лоя вставила хедер -->
+        <h2 class="pb-2 border-bottom" style="margin-top: 25px">All active projects</h2>
+        <!-- ВЫВОДИМ НАШЕГО ЮЗЕРА -->
+        <!--div style="display: flex;justify-content: right;">
+            <h4 th:object="${user}" th:text="${user}" style="color: black;float: left;">>User:</h4>
+        </div-->
+        <form id="projectForm" th:action="@{/projects}" th:object="${project}" method="post">
+            <div th:if="${#fields.hasErrors('*')}"
+                 class="alert alert-error">
+                <p th:each="error : ${#fields.errors('*')}"
+                   th:text="${error}">
+                    Validation error
+                </p>
+            </div>
+            <div style="height: 80px">
+                <label for="name" style="margin-top: 50px; font-size: 22px; color: grey">Put name of new
+                    project </label>
+            </div>
 
-                <div class="navbar" style="display: flex; justify-content: space-between;">
-                    <input class="" type="text"
-                           th:field="*{name}"
-                           th:class="${#fields.hasErrors('name')} ? 'field-error'" placeholder=" project name" style="margin-top: 5px; width: 600px; height: 45px"/>
-                    <div class="form-actions">
-                        <!--input type="submit" value="CREATE" style="margin-top: 5px"/-->
-                        <button class="btn btn-lg btn-primary btn-block" type="submit"
-                                style="height: 50px; text-align: center; margin-left: 420px;">CREATE</button>
-                    </div>
+            <div class="navbar" style="display: flex; justify-content: space-between;">
+                <input class="" type="text"
+                       th:field="*{name}"
+                       th:class="${#fields.hasErrors('name')} ? 'field-error'" placeholder=" project name"
+                       style="margin-top: 5px; width: 600px; height: 45px"/>
+                <div class="form-actions">
+                    <!--input type="submit" value="CREATE" style="margin-top: 5px"/-->
+                    <button class="btn btn-lg btn-primary btn-block" type="submit"
+                            style="height: 50px; text-align: center; margin-left: 420px;">CREATE
+                    </button>
                 </div>
-            </form>
-            <div>
-                <!-- Кнопка для модального окна  -->
-                
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-                        style="height: 50px;text-align: center;width: 100px;">JOIN</button>
-                <!-- Модальное окно -->
-                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <!-- ФОРМА ДЛЯ ВВОДА КОДА-->
-                            <form th:action="@{/projects/join}" th:object="${project}" method="post">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="staticBackdropLabel">Enter the code of the project you want to join</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+        </form>
+        <div>
+            <!-- Кнопка для модального окна  -->
+
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                    style="height: 50px;text-align: center;width: 100px;">JOIN
+            </button>
+            <!-- Модальное окно -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <!-- ФОРМА ДЛЯ ВВОДА КОДА-->
+                        <form th:action="@{/projects/join}" th:object="${project}" method="post">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Enter the code of the project you want
+                                    to join</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Закрыть"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">Project Code</span>
+                                    <input th:field="*{code}" type="text" class="form-control" placeholder="Code"
+                                           aria-label="Project code" aria-describedby="basic-addon1">
                                 </div>
-                                <div class="modal-body">
-                                    <div class="input-group mb-3">
-                                        <span class="input-group-text" id="basic-addon1">Project Code</span>
-                                        <input th:field="*{code}" type="text" class="form-control" placeholder="Code"
-                                               aria-label="Project code" aria-describedby="basic-addon1">
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Join project</button>
-                                </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Join project</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div th:if="${projects.empty}" style="margin-top: 24px; font-size: 25px; color: crimson; text-align: -webkit-center;">
-                You haven't created a project yet
-            </div>
-            <div th:each="project : ${projects}">
+        <div th:if="${projects.empty}"
+             style="margin-top: 24px; font-size: 25px; color: crimson; text-align: -webkit-center;">
+            You haven't created a project yet
+        </div>
+        <div th:each="project : ${projects}">
 
             <div class="col" style="padding: 15px;display:flex;background-color: whitesmoke;">
                 <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg"
                      style="background-image: url('unsplash-photo-1.jpg'); width: 550px; display:flex">
-                    <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1" style="background: lightblue;">
+                    <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1"
+                         style="background: lightblue;">
                         <a th:href="@{/projects/__${project.id}__}">
                             <small class="d-block text-muted">
-                                <svg class="bi me-1" width="1em" height="1em">Name: </svg>
+                                <svg class="bi me-1" width="1em" height="1em">Name:</svg>
                             </small>
-                            <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold" th:text="${project.name}" style="text-transform: capitalize;"></h2>
+                            <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold" th:text="${project.name}"
+                                style="text-transform: capitalize;"></h2>
                             <!--h5 th:text="${project.code}">Code:</h5-->
                         </a>
                         <ul class="d-flex list-unstyled mt-auto">
                             <li class="d-flex align-items-center me-3">
-                                <svg class="bi me-1" width="1em" height="1em"><use xlink:href="#geo-fill"></use></svg>
+                                <svg class="bi me-1" width="1em" height="1em">
+                                    <use xlink:href="#geo-fill"></use>
+                                </svg>
                                 <!-- !!!! -->
-<!--                                <small>Contributors: <small th:object="${number}" th:text="${number}"></small></small>-->
+                                <!--                                <small>Contributors: <small th:object="${number}" th:text="${number}"></small></small>-->
                             </li>
                             <li class="d-flex align-items-center">
-                                <svg class="bi me-1" width="1em" height="1em"><use xlink:href="#calendar3"></use></svg>
+                                <svg class="bi me-1" width="1em" height="1em">
+                                    <use xlink:href="#calendar3"></use>
+                                </svg>
                                 <!-- !!!! -->
-<!--                                <small th:object="${owner}" th:text="${owner}" style="color: black">Contributors: </small>-->
+                                <!--                                <small th:object="${owner}" th:text="${owner}" style="color: black">Contributors: </small>-->
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
-            </div>
         </div>
-        <p class="mt-5 mb-3 text-muted">© TeamService 2021</p>
-    </main>
+    </div>
+    <p class="mt-5 mb-3 text-muted">© TeamService 2021</p>
+</main>
 </body>
 </html>
