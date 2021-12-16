@@ -12,7 +12,7 @@ public class Comment {
     @Getter
     @Setter
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long id;
+    private Integer id;
 
     @Getter
     @Setter

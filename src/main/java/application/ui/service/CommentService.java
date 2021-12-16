@@ -18,8 +18,8 @@ public class CommentService {
     public void setCommentRepository(CommentRepository commentRepository){
         CommentService.commentRepository = commentRepository;
     }
-    public static Comment create(Project project, Task task, User user, Comment comment){
-        task.setProject(project);
+
+    public static Comment create(Task task, User user, Comment comment){
         comment.setOwner(user);
         comment.setTask(task);
         return commentRepository.save(comment);
@@ -32,7 +32,6 @@ public class CommentService {
     public static Iterable<Comment> getAll(){
         return commentRepository.findAll();
     }
-
 
     public static Iterable<Comment> getAllByUserId(Integer userId){
         User user = UserService.getById(userId);
