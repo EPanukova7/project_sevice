@@ -1,24 +1,21 @@
 package application.ui.controller;
 
-import application.ui.Validation;
 import application.ui.entity.Comment;
 import application.ui.entity.Project;
 import application.ui.entity.Task;
 import application.ui.entity.User;
 import application.ui.service.CommentService;
 import application.ui.service.TaskService;
+import application.ui.service.TaskStatusService;
 import application.ui.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.DirectFieldBindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.HashMap;
-import java.util.List;
 
 @Controller
 public class TaskController {
@@ -43,9 +40,6 @@ public class TaskController {
         if (userId == -1) {
             return new ModelAndView("redirect:login");
         }
-//        if (!Validation.isCorrectName(task.getName())) {
-//            result.addError(new FieldError("task", "name", "Incorrect task name. Use a-zA-Z0-9_-"));
-//        }
         if (result.hasErrors()) {
             return new ModelAndView("tasks/create", "formErrors", result.getAllErrors());
         }
@@ -70,6 +64,9 @@ public class TaskController {
         params.put("project", project);
         params.put("task", task);
         params.put("comments", CommentService.getAllByTaskId(task.getId()));
+        params.put("projectUsers", project.getUsers());
+        params.put("taskStatuses", TaskStatusService.getAllById(task.getStatus().getId()));
+        params.put("taskOwner", task.getOwner());
         return new ModelAndView("tasks/view", params);
     }
 
@@ -89,6 +86,13 @@ public class TaskController {
         params.put("task", task);
         params.put("comments", CommentService.getAllByTaskId(task.getId()));
         return new ModelAndView("redirect:/projects/{projectId}/tasks/{taskId}", params);
+    }
+
+    @PatchMapping("projects/{projectId}/tasks/{taskId}")
+    public ModelAndView changeStatusAndUser(@PathVariable("projectId") Project project,
+                                            @PathVariable("taskId") @Valid Task task,
+                                            @CookieValue(value = "userId", defaultValue = "-1") int userId){
+        return new ModelAndView("redirect:/projects/{projectId}/tasks/{taskId}");
     }
 
     @PostMapping(value = "projects/{projectId}/tasks/{taskId}/comments/{commentId}")

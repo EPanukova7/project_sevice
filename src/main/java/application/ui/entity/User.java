@@ -2,7 +2,6 @@ package application.ui.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import javax.validation.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -45,4 +44,8 @@ public class User {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
     private List<Comment> comments;
 
+    @Getter
+    @Setter
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
+    private Set<Task> tasks = new HashSet<>();
 }
