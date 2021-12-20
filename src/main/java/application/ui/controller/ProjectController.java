@@ -24,7 +24,7 @@ public class ProjectController {
     }
 
     @GetMapping(value = "/projects")
-    public ModelAndView list_get(@ModelAttribute Project project, @CookieValue(value = "userId", defaultValue = "-1") int userId) {
+    public ModelAndView listGet(@ModelAttribute Project project, @CookieValue(value = "userId", defaultValue = "-1") int userId) {
         if (userId == -1) {
             return new ModelAndView("redirect:login");
         }
@@ -39,7 +39,7 @@ public class ProjectController {
     }
 
     @PostMapping(value = "/projects")
-    public ModelAndView create_post(@Valid Project project,
+    public ModelAndView createPost(@Valid Project project,
                                     BindingResult result,
                                     @CookieValue(value = "userId", defaultValue = "-1") int userId, Model model) {
         if (userId == -1) {
@@ -61,7 +61,7 @@ public class ProjectController {
     }
 
     @GetMapping("/projects/{projectId}")
-    public ModelAndView view_get(@PathVariable("projectId") Project project,
+    public ModelAndView viewGet(@PathVariable("projectId") Project project,
                                  @CookieValue(value = "userId", defaultValue = "-1") int userId) {
         if (userId == -1) {
             return new ModelAndView("redirect:login");
@@ -84,7 +84,7 @@ public class ProjectController {
     }
 
     @PostMapping(value = "/projects/join")
-    public ModelAndView join_post(@Valid Project project,
+    public ModelAndView joinPost(@Valid Project project,
                                   BindingResult result,
                                   @CookieValue(value = "userId", defaultValue = "-1") int userId) {
         if (userId == -1) {
