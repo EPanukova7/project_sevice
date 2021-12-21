@@ -42,9 +42,9 @@ public class TaskController {
         if (userId == -1) {
             return new ModelAndView("redirect:login");
         }
-        if (!Validation.isCorrectName(task.getName())) {
-            result.addError(new FieldError("task", "name", "Incorrect task name. Use a-zA-Z0-9_-"));
-        }
+//        if (!Validation.isCorrectName(task.getName())) {
+//            result.addError(new FieldError("task", "name", "Incorrect task name. Use a-zA-Z0-9_-"));
+//        }
         if (result.hasErrors()) {
             return new ModelAndView("tasks/create", "formErrors", result.getAllErrors());
         }
