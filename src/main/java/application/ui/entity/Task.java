@@ -42,6 +42,12 @@ public class Task {
     private Project project;
 
     @Getter
+    @Setter
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "executor_id", referencedColumnName = "id", nullable = true)
+    private User executor;
+
+    @Getter
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "task")
     private List<Comment> comments = new ArrayList<>();
 

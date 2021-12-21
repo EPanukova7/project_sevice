@@ -26,13 +26,12 @@ public class TaskService {
         return taskRepository.findById(id).orElse(null);
     }
 
-    public static Iterable<Task> getAllByProject_id(Integer id){
-        Project project = ProjectService.getById(id);
-        return project.getTasks();
-    }
-
     public static Task create(Project project, Task task){
         task.setProject(project);
         return taskRepository.save(task);
+    }
+
+    public static ArrayList<Task> getAllByExecutorIdAAndProjectId(Integer executorId, Integer projectId){
+        return taskRepository.findAllByExecutorIdAAndProjectId(executorId, projectId);
     }
 }
