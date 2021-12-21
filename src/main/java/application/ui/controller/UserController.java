@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 @Controller
 public class UserController {
     @PostMapping(value = "/login")
-    public ModelAndView login_post(@Valid User user, BindingResult result,
+    public ModelAndView loginPost(@Valid User user, BindingResult result,
                                    HttpServletResponse response) {
         if (result.hasErrors()) {
             return new ModelAndView("users/login", "formErrors", result.getAllErrors());
@@ -52,7 +52,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/login")
-    public ModelAndView login_get(@ModelAttribute User user) {
+    public ModelAndView loginGet(@ModelAttribute User user) {
         return new ModelAndView("users/login");
     }
 

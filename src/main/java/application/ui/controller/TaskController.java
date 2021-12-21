@@ -5,6 +5,7 @@ import application.ui.entity.Project;
 import application.ui.entity.Task;
 import application.ui.entity.User;
 import application.ui.service.CommentService;
+import application.ui.service.ProjectService;
 import application.ui.service.TaskService;
 import application.ui.service.TaskStatusService;
 import application.ui.service.UserService;
@@ -15,13 +16,14 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 @Controller
 public class TaskController {
 
     @GetMapping(value = "/projects/{projectId}/tasks/create")
-    public ModelAndView create_get(@PathVariable("projectId") Project project,
+    public ModelAndView createGet(@PathVariable("projectId") Project project,
                                    @ModelAttribute Task task,
                                    @CookieValue(value = "userId", defaultValue = "-1") int userId) {
         if (userId == -1) {
@@ -33,7 +35,7 @@ public class TaskController {
     }
 
     @PostMapping(value = "/projects/{projectId}/tasks/create")
-    public ModelAndView create_post(@PathVariable("projectId") Project project,
+    public ModelAndView createPost(@PathVariable("projectId") Project project,
                                     @Valid Task task,
                                     @CookieValue(value = "userId", defaultValue = "-1") int userId,
                                     BindingResult result) {
@@ -51,7 +53,7 @@ public class TaskController {
     }
 
     @GetMapping(value = "/projects/{projectId}/tasks/{taskId}")  // Вроде решили на эту страницу передавать комменты
-    public ModelAndView view_get(@PathVariable("projectId") Project project,
+    public ModelAndView viewGet(@PathVariable("projectId") Project project,
                                  @PathVariable("taskId") Task task,
                                  @ModelAttribute Comment comment,
                                  @CookieValue(value = "userId", defaultValue = "-1") int userId) {
@@ -111,5 +113,21 @@ public class TaskController {
 
         CommentService.deleteComment(comment);
         return new ModelAndView("redirect:/projects/{projectId}/tasks/{taskId}");
+    }
+
+    @GetMapping(value = "/my_tasks")
+    public ModelAndView myTasksGet(@CookieValue(value = "userId", defaultValue = "-1") int userId) {
+        if (userId == -1) {
+            return new ModelAndView("redirect:login");
+        }
+        Iterable<Project> projects = ProjectService.getAllByUserId(userId);
+        HashMap<Integer, ArrayList<Task>> projectsTasksMap = new HashMap<>();
+        for (Project project : projects){
+            projectsTasksMap.put(project.getId(), TaskService.getAllByExecutorIdAAndProjectId(userId, project.getId()));
+        }
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("projects", projects);
+        params.put("projectsTasksMap", projectsTasksMap);
+        return new ModelAndView("my_tasks", params);
     }
 }
