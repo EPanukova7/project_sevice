@@ -47,7 +47,7 @@ public class TaskController {
             return new ModelAndView("tasks/create", "formErrors", result.getAllErrors());
         }
 
-        task = TaskService.create(project, task, project.getOwner(), );
+        task = TaskService.create(project, task, project.getOwner());
         HashMap<String, Object> params = new HashMap<>();
         params.put("projectId", project.getId());
         params.put("taskId", task.getId());

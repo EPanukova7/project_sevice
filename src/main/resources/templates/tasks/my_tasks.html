@@ -48,21 +48,23 @@
     <div layout:fragment="content" class="container">
         <header th:insert="layout :: header"></header>
         <h2 class="pb-2 border-bottom" style="margin-top: 25px">My Tasks</h2>
-        <div>
+        <div th:each="project, tasks : ${projects}" >
             <div th:if="${projects.empty}"
                  style="font-size: 25px; color: crimson; text-align: -webkit-center;">
                 Chat is empty right now
-            </div>
-            <div th:each="project, tasks : ${projects}" >
-                <h3 th:text="${project.name}" ></h3>
-                <div th:each="task : ${tasks}" style="font-size:17px">
-                    <h4 style="margin-top: 20px">List of tasks:</h4>  <!-- список пуст, тк не добавлено ничего -->
-                    <p th:if="!${project.owner.executingTasks.empty}"
-                       th:each="taskA : ${project.owner.executingTasks}" th:text="${taskA.name}"></p>
+            </div >
+            <h3 th:text="${project.name}" style="margin-block-end: 30px;"></h3>
+<!--            <div th:if="!${project.owner.executingTasks.empty}" style="text-align: -webkit-center;"> You don't have tasks yet :(</div>-->
+
+            <div th:each="task : ${tasks}" th:if="!${project.owner.executingTasks.empty}" class="list-group" style="background: aliceblue; width: 600px;">
+                <div th:each="taskA : ${project.owner.executingTasks}" style="margin-bottom: 25px;">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1" th:text="${taskA.name}" style="text-transform: capitalize;"></h5>
+                        <p class="mb-1" th:text="${taskA.status.title}" style="color: blue; font-weight: bold;">Status:</p>
+                    </div>
                 </div>
             </div>
-
+        </div>
     </div>
-
 </body>
 </html>
