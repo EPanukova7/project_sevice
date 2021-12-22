@@ -109,6 +109,13 @@ public class TaskController {
         return new ModelAndView("redirect:/projects/{projectId}/tasks/{taskId}");
     }
 
+    @PatchMapping("projects/{projectId}/tasks/{taskId}")
+    public ModelAndView changeStatusAndUser(@PathVariable("projectId") Project project,
+                                            @PathVariable("taskId") @Valid Task task,
+                                            @CookieValue(value = "userId", defaultValue = "-1") int userId){
+        return new ModelAndView("redirect:/projects/{projectId}/tasks/{taskId}");
+    }
+
     @GetMapping(value = "/my_tasks")
     public ModelAndView myTasksGet(@CookieValue(value = "userId", defaultValue = "-1") int userId) {
         if (userId == -1) {
