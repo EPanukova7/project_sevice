@@ -43,6 +43,12 @@ public class Task {
 
     @Getter
     @Setter
+    @ManyToOne
+    @JoinColumn(name = "owner_id", referencedColumnName = "id", nullable = false)
+    private User owner;
+
+    @Getter
+    @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id", referencedColumnName = "id", nullable = false)
     private User owner;
@@ -57,5 +63,10 @@ public class Task {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "task")
     private List<Comment> comments = new ArrayList<>();
 
+    @Getter
+    @Setter
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "status_id", referencedColumnName = "id", nullable = false)
+    private TaskStatus status;
 
 }

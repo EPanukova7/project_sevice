@@ -45,9 +45,9 @@ public class ProjectController {
         if (userId == -1) {
             return new ModelAndView("redirect:login");
         }
-        if (!Validation.isCorrectName(project.getName())){
-            result.addError(new FieldError("project", "name", "Incorrect project name. Use a-zA-Z0-9_-"));
-        }
+//        if (!Validation.isCorrectName(project.getName())){
+//            result.addError(new FieldError("project", "name", "Incorrect project name. Use a-zA-Z0-9_-"));
+//        }
         if (result.hasErrors()) {
             return new ModelAndView("projects/list", "formErrors", result.getAllErrors());
         }

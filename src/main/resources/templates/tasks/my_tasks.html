@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.88.1">
-    <title>Create Task Form 1</title>
+    <title>My Tasks</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/headers/">
 
@@ -47,42 +47,22 @@
 <body>
     <div layout:fragment="content" class="container">
         <header th:insert="layout :: header"></header>
+        <h2 class="pb-2 border-bottom" style="margin-top: 25px">My Tasks</h2>
+        <div>
+            <div th:if="${projects.empty}"
+                 style="font-size: 25px; color: crimson; text-align: -webkit-center;">
+                Chat is empty right now
+            </div>
+            <div th:each="project, tasks : ${projects}" >
+                <h3 th:text="${project.name}" ></h3>
+                <div th:each="task : ${tasks}" style="font-size:17px">
+                    <h4 style="margin-top: 20px">List of tasks:</h4>  <!-- список пуст, тк не добавлено ничего -->
+                    <p th:if="!${project.owner.executingTasks.empty}"
+                       th:each="taskA : ${project.owner.executingTasks}" th:text="${taskA.name}"></p>
+                </div>
+            </div>
 
-        <main class="form-signin">
-            <form id="taskForm" th:action="@{/projects/__${project.id}__/tasks/create}"
-                  th:object="${task}" method="post" style="display">
-                <div th:if="${#fields.hasErrors('*')}"
-                     class="alert alert-error">
-                    <p th:each="error : ${#fields.errors('*')}"
-                       th:text="${error}">
-                        Validation error
-                    </p>
-                </div>
-                <div class="pb-2 border-bottom" style="display: flex; justify-content: space-between; margin-top: 40px;">
-                    <h2>Add new task</h2>
-                    <div style="font-size: 20px;font-weight: bold;display: flex;width: 170px;justify-content: space-between;">Code:
-                        <h5 style="margin-top=5px;
-                        font-weight=400;" th:text="${project.code}"></h5></div>
-                </div>
-                <div class="form-floating">
-                    <input type="text"
-                           th:field="*{name}"
-                           th:class="${#fields.hasErrors('name')} ? 'field-error'" class="form-control" id="floatingInput" placeholder="  Title of task" style="margin-top: 10px; width: 250px; height: 50px">
-                    <label for="name"></label>
-                </div>
-                <div class="form-floating">
-                    <input type="text" th:field="*{description}"
-                           th:class="${#fields.hasErrors('description')} ? 'field-error'" class="form-control" id="floatingPassword" placeholder="  Description of task" style="margin-top: 10px; width: 250px; height: 50px">
-                    <label for="description"></label>
-                </div>
+    </div>
 
-                <button class="btn btn-lg btn-primary" type="submit" style="margin-top: 20px; width: 100px; height: 50px;">CREATE</button>
-            </form>
-            <form th:action="@{/projects/__${project.id}__}">
-                <button class="btn btn-lg btn-primary" type="submit" style="margin-top: 20px; width: 100px; height: 50px;">BACK</button>
-            </form>
-            <p class="mt-5 mb-3 text-muted">© TeamService 2021</p>
-        </main>
-</div>
 </body>
 </html>

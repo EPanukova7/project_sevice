@@ -47,9 +47,9 @@ public class Project {
     @Setter
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-        name = "project_user",
-        joinColumns = { @JoinColumn(name = "project_id", nullable = false) },
-        inverseJoinColumns = { @JoinColumn(name = "user_id", nullable = false) }
+            name = "project_user",
+            joinColumns = { @JoinColumn(name = "project_id", nullable = false) },
+            inverseJoinColumns = { @JoinColumn(name = "user_id", nullable = false) }
     )
     private Set<User> users = new HashSet<>();
 }

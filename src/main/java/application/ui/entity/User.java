@@ -23,7 +23,7 @@ public class User {
     @Getter
     @Setter
     @NotNull
-    private String email;
+    public String email;
 
     @Getter
     @Setter
@@ -37,13 +37,18 @@ public class User {
 
     @Getter
     @Setter
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users")
+    private Set<Project> projects = new HashSet<>();
+
+    @Getter
+    @Setter
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "executor")
     private List<Task> executingTasks = new ArrayList<>();
 
     @Getter
     @Setter
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users")
-    private Set<Project> projects = new HashSet<>();
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
+    private Set<Task> tasks = new HashSet<>();
 
     @Getter
     @Setter
