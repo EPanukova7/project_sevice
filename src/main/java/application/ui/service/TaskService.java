@@ -37,17 +37,25 @@ public class TaskService {
         return taskRepository.findById(id).orElse(null);
     }
 
+    public TaskStatus getStatusById(Integer id){
+        return taskStatusRepository.findById(id).orElse(null);
+    }
+
     public Task create(Project project, Task task, User owner){
         task.setProject(project);
         task.setExecutor(owner);
-        System.out.println(this.defaultTaskStatus);
-        System.out.println(this.defaultTaskStatus.getName());
         task.setStatus(this.defaultTaskStatus);
         return taskRepository.save(task);
     }
 
     public void updateExecutor(Task task, User executor){
+        System.out.println(executor.getEmail());
         task.setExecutor(executor);
+        taskRepository.save(task);
+    }
+
+    public void updateStatus(Task task, TaskStatus status){
+        task.setStatus(status);
         taskRepository.save(task);
     }
 
@@ -70,7 +78,7 @@ public class TaskService {
     public Iterable<TaskStatus> getPossibleStatusesByTaskStatus(TaskStatus status) {
         List<Integer> ids = new ArrayList<>();
         ids.add(status.getId());
-        ids.add((status.getId() + 1) % statusNames.length);
+        ids.add(status.getId() % statusNames.length + 1);
         return taskStatusRepository.findAllById(ids);
     }
 

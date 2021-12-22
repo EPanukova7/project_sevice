@@ -50,11 +50,9 @@
 <body>
 <div layout:fragment="content" class="container">
     <header th:insert="layout :: header"></header>
-    <form th:action="@{/projects/__${project.id}__/tasks/__${task.id}__/executor}" method="post"
-          th:object="${taskExecutor}"
-          class="modal modal-sheet position-static d-block "
-          style="height: 250px; margin-left: 10px; margin-top: 10px; background: SkyBlue;"
-          tabindex="-1" role="dialog" id="modalSheet">
+    <div class="modal modal-sheet position-static d-block"
+         style="height: 400px; margin-left: 10px; margin-top: 10px; background: SkyBlue;"
+         tabindex="-1" role="dialog" id="modalSheet">
         <h3 class="fw-bold mb-0" id="name" th:text="${task.name}"
             style="background: white;text-transform: capitalize;"></h3>
 
@@ -62,26 +60,33 @@
             style="margin-top: 15px;margin-left: 10px;text-transform: capitalize;"></h6>
 
         <h7 class="fw-bold mb-0" style="margin-left: 10px;">Исполнитель</h7>
+        <form th:object="${executor}" th:action="@{/projects/__${project.id}__/tasks/__${task.id}__/executor}" method="post">
+            <select th:field="*{id}" class="form-select" id="executor" name="executor"
+                    style="width: 30%">
+                <option th:each="prUser: ${project.users}" th:value="${prUser.id}"
+                        th:text="${prUser.email + prUser.id + task.executor.id}" th:selected="${prUser.id} == ${task.executor.id}">
+                </option>
+            </select>
+            <p th:each="prUser: ${project.users}" th:text="${prUser.id} == ${task.executor.id}"></p>
+            <button class="btn btn-lg btn-primary" type="submit"
+                    style="height: 50px; text-align: center; margin-top: 20px">SAVE
+            </button>
+        </form>
 
-        <select th:field="*{id}" class="form-select" id="taskOwner" name="taskOwner" style="width: 30%">
-            <option for="userMY" th:each="prUser: ${project.users}" th:value="${prUser.id}"
-                    th:text="${prUser.email}">
+        <h7 class="fw-bold mb-0" style="margin-left: 10px;">Статус</h7>
+        <form th:object="${status}" th:action="@{/projects/__${project.id}__/tasks/__${task.id}__/status}" method="post">
+            <select th:field="*{id}" class="form-select" id="status" name="status" style="width: 30%">
+                <option th:each="taskSt: ${taskStatuses}" th:value="${taskSt.id}" th:text="${taskSt.name + taskSt.id + task.status.id}"
+                        th:selected="${taskSt.id==task.status.id}">
+                </option>
+            </select>
+            <p th:each="taskSt: ${taskStatuses}" th:text="${taskSt.id==task.status.id}"></p>
+            <button class="btn btn-lg btn-primary" type="submit"
+                    style="height: 50px; text-align: center; margin-top: 20px">SAVE
+            </button>
+        </form>
+    </div>
 
-            </option>
-        </select>
-
-        <!--            <h7 class="fw-bold mb-0" style="margin-left: 10px;">Статус</h7>-->
-        <!--            <select  class="form-select" id="taskStatus" name="taskStatus" style="width: 30%">-->
-        <!--                <option th:each="taskSt: ${taskStatuses}" th:value="${taskSt.id}" th:text="${taskSt.title}"-->
-        <!--                        th:selected="${taskSt.id}==${task.status.id}"></option>-->
-        <!--                &lt;!&ndash;input th:value="${taskSt.id}==${task.status.id}"&ndash;&gt;-->
-        <!--            </select>-->
-
-        <button class="btn btn-lg btn-primary" type="submit"
-                style="height: 50px; text-align: center; margin-top: 20px">SAVE
-        </button>
-
-    </form>
 
     <a th:href="@{/projects/__${project.id}__}">
         <button class="btn btn-lg btn-primary" type="submit" style="margin-top: 20px; width: 100px; height: 50px;">

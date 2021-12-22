@@ -1,10 +1,7 @@
 package application.ui.controller;
 
 import application.ui.Validation;
-import application.ui.entity.Comment;
-import application.ui.entity.Project;
-import application.ui.entity.Task;
-import application.ui.entity.User;
+import application.ui.entity.*;
 import application.ui.service.TaskService;
 import application.ui.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -73,7 +70,8 @@ public class TaskController {
     public ModelAndView viewGet(@PathVariable("projectId") Project project,
                                 @PathVariable("taskId") Task task,
                                 @ModelAttribute Comment comment,
-                                @ModelAttribute User taskExecutor,
+                                @ModelAttribute User executor,
+                                @ModelAttribute TaskStatus status,
                                 @CookieValue(value = "userId", defaultValue = "-1") int userId) {
         if (userId == -1) {
             return new ModelAndView("redirect:/login");
@@ -87,6 +85,9 @@ public class TaskController {
         params.put("taskComments", task.getComments());
         params.put("taskStatuses", taskService.getPossibleStatusesByTaskStatus(task.getStatus()));
         params.put("taskExecutor", task.getExecutor());
+        params.put("comment", comment);
+        params.put("executor", executor);
+        params.put("status", status);
         return new ModelAndView("tasks/view", params);
     }
 
@@ -108,11 +109,28 @@ public class TaskController {
     }
 
     @PostMapping("/projects/{projectId}/tasks/{taskId}/executor")
-    public ModelAndView changeStatusAndUser(@PathVariable("projectId") Project project,
-                                            @PathVariable("taskId") @Valid Task task,
-                                            @Valid User executor,
-                                            @CookieValue(value = "userId", defaultValue = "-1") int userId){
+    public ModelAndView updateExecutor(@PathVariable("projectId") Project project,
+                                                @PathVariable("taskId") @Valid Task task,
+                                                @Valid User executor,
+                                                @CookieValue(value = "userId", defaultValue = "-1") int userId){
+        System.out.println(executor);
+        System.out.println(executor.getId());
+        System.out.println(executor.getEmail());
+        executor = userService.getById(executor.getId());
         taskService.updateExecutor(task, executor);
+        return new ModelAndView("redirect:/projects/{projectId}/tasks/{taskId}");
+    }
+
+    @PostMapping("/projects/{projectId}/tasks/{taskId}/status")
+    public ModelAndView updateStatus(@PathVariable("projectId") Project project,
+                                       @PathVariable("taskId") @Valid Task task,
+                                       @Valid TaskStatus status,
+                                       @CookieValue(value = "userId", defaultValue = "-1") int userId){
+        System.out.println(status);
+        System.out.println(status.getId());
+        status = taskService.getStatusById(status.getId());
+        System.out.println(status.getName());
+        taskService.updateStatus(task, status);
         return new ModelAndView("redirect:/projects/{projectId}/tasks/{taskId}");
     }
 
