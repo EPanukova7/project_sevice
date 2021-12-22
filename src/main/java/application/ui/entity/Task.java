@@ -44,6 +44,12 @@ public class Task {
     @Getter
     @Setter
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id", referencedColumnName = "id", nullable = false)
+    private User owner;
+
+    @Getter
+    @Setter
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "executor_id", referencedColumnName = "id", nullable = true)
     private User executor;
 

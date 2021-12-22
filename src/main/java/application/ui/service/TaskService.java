@@ -26,8 +26,9 @@ public class TaskService {
         return taskRepository.findById(id).orElse(null);
     }
 
-    public static Task create(Project project, Task task){
+    public static Task create(Project project, Task task, User owner){
         task.setProject(project);
+        task.setOwner(owner);
         return taskRepository.save(task);
     }
 
