@@ -50,47 +50,47 @@
 <body>
 <div layout:fragment="content" class="container">
     <header th:insert="layout :: header"></header>
-    <form
-          class="modal modal-sheet position-static d-block " style="background: SkyBlue;
-              weight: 350px" tabindex="-1" role="dialog"
-          id="modalSheet">
-        <h3 class="fw-bold mb-0"id="name" th:text="${task.name}" style="background: white;text-transform: capitalize;"></h3>
+    <form th:action="@{/projects/__${project.id}__/tasks/__${task.id}__/executor}" method="post"
+          th:object="${taskExecutor}"
+          class="modal modal-sheet position-static d-block "
+          style="height: 250px; margin-left: 10px; margin-top: 10px; background: SkyBlue;"
+          tabindex="-1" role="dialog" id="modalSheet">
+        <h3 class="fw-bold mb-0" id="name" th:text="${task.name}"
+            style="background: white;text-transform: capitalize;"></h3>
 
-        <form th:object="${taskExecutor}" method="post" style="height: 250px; margin-left: 10px; margin-top: 10px" >
-            <h6 id="description" th:text="${task.description}"
-                style="margin-top: 15px;margin-left: 10px;text-transform: capitalize;"></h6>
+        <h6 id="description" th:text="${task.description}"
+            style="margin-top: 15px;margin-left: 10px;text-transform: capitalize;"></h6>
 
-            <h7 class="fw-bold mb-0" style="margin-left: 10px;">Исполнитель</h7>
+        <h7 class="fw-bold mb-0" style="margin-left: 10px;">Исполнитель</h7>
 
-            <select th:field="*{id}" class="form-select" id="taskOwner" name="taskOwner" style="width: 30%">
-                <option for="userMY" th:each="prUser: ${projectUsers}" th:value="${prUser}" th:utext="${prUser.email}"
-                        ></option>
-                <!--                    -->
-                <!--                    <input th:if="${prUser.id}==null" th:value="${taskOwner.id}" name="userMY" type="text">-->
-                <!--                    <input th:if="${prUser.id}!=null" th:value="${prUser.id}" name="userMY" type="text">-->
-            </select>
+        <select th:field="*{id}" class="form-select" id="taskOwner" name="taskOwner" style="width: 30%">
+            <option for="userMY" th:each="prUser: ${project.users}" th:value="${prUser.id}"
+                    th:text="${prUser.email}">
 
-<!--            <h7 class="fw-bold mb-0" style="margin-left: 10px;">Статус</h7>-->
-<!--            <select  class="form-select" id="taskStatus" name="taskStatus" style="width: 30%">-->
-<!--                <option th:each="taskSt: ${taskStatuses}" th:value="${taskSt.id}" th:text="${taskSt.title}"-->
-<!--                        th:selected="${taskSt.id}==${task.status.id}"></option>-->
-<!--                &lt;!&ndash;input th:value="${taskSt.id}==${task.status.id}"&ndash;&gt;-->
-<!--            </select>-->
+            </option>
+        </select>
 
-            <button class="btn btn-lg btn-primary" type="submit"
-                    style="height: 50px; text-align: center; margin-top: 20px">SAVE
-            </button>
+        <!--            <h7 class="fw-bold mb-0" style="margin-left: 10px;">Статус</h7>-->
+        <!--            <select  class="form-select" id="taskStatus" name="taskStatus" style="width: 30%">-->
+        <!--                <option th:each="taskSt: ${taskStatuses}" th:value="${taskSt.id}" th:text="${taskSt.title}"-->
+        <!--                        th:selected="${taskSt.id}==${task.status.id}"></option>-->
+        <!--                &lt;!&ndash;input th:value="${taskSt.id}==${task.status.id}"&ndash;&gt;-->
+        <!--            </select>-->
 
-        </form>
+        <button class="btn btn-lg btn-primary" type="submit"
+                style="height: 50px; text-align: center; margin-top: 20px">SAVE
+        </button>
 
     </form>
-    <form th:action="@{/projects/__${project.id}__}">
+
+    <a th:href="@{/projects/__${project.id}__}">
         <button class="btn btn-lg btn-primary" type="submit" style="margin-top: 20px; width: 100px; height: 50px;">
             BACK
         </button>
-    </form>
+    </a>
 
-    <form id="projectForm" th:action="@{/projects/__${project.id}__/tasks/__${task.id}__}" th:object="${comment}"
+    <form id="commentForm" th:action="@{/projects/__${project.id}__/tasks/__${task.id}__/comments/create}"
+          th:object="${comment}"
           method="post">
         <div th:if="${#fields.hasErrors('*')}"
              class="alert alert-error">
@@ -104,14 +104,14 @@
         </div>
 
         <div class="navbar" style="display: flex; justify-content: space-between;">
-            <input class="" type="text"
-                   th:field="*{commentText}"
-                   th:class="${#fields.hasErrors('commentText')} ? 'field-error'" placeholder=" project commentText"
+            <input class="" type="text" id="commentText"
+                   th:field="*{text}"
+                   th:class="${#fields.hasErrors('text')} ? 'field-error'" placeholder="text"
                    style="margin-top: 5px; width: 600px; height: 45px"/>
             <div class="form-actions">
-                <!--input type="submit" value="CREATE" style="margin-top: 5px"/-->
                 <button class="btn btn-lg btn-primary btn-block" type="submit"
-                        style="height: 50px; text-align: center; margin-left: 420px;">SEND
+                        style="height: 50px; text-align: center; margin-left: 420px;">
+                    SEND
                 </button>
             </div>
         </div>
@@ -119,31 +119,34 @@
 
     <div class="chat">
         <ul>
-            <div th:if="${comments.empty}"
+            <div th:if="${taskComments.isEmpty()}"
                  style="margin-top: 24px; font-size: 25px; color: crimson; text-align: -webkit-center;">
                 Chat is empty right now
             </div>
             <div class="alert alert-error" style="font-weight: bold; color: darkred;">
-                <p th:text="${error}"></p>
+                <p th:text="${errorMessage}"></p>
             </div>
-            <div th:each="comment : ${comments}" class="list-group">
-                <label class="list-group-item d-flex gap-3">
+            <div th:each="comment : ${taskComments}" class="list-group">
+                <div class="list-group-item d-flex gap-3">
                     <span class="pt-1 form-checked-content" style="width: 1200px">
+                        <strong th:text="${comment.text}" style="text-transform: capitalize;">
+
+                        </strong>
+                            <small th:text="${comment.owner.email}" class="d-block text-muted">
+                                <svg class="bi me-1" width="1em" height="1em"> </svg>
+                            </small>
+                    </span>
+                    <div th:if="${comment.owner.email == user.email}" class="form-actions"
+                         style="display: flex; justify-content: end">
                         <form th:action="@{/projects/__${project.id}__/tasks/__${task.id}__/comments/__${comment.id}__}"
                               method="post">
-<!--                            <input name="commentId" type="hidden" th:field="${comment}">-->
-                            <strong th:text="${comment.commentText}" style="text-transform: capitalize;"></strong>
-                                <small th:text="${comment.owner.email}" class="d-block text-muted">
-                                    <svg class="bi me-1" width="1em" height="1em"> </svg>
-                                </small>
-                            <div th:if="${comment.owner.email == user.email}" class="form-actions" style="display: flex; justify-content: end">
-                                <button class="btn btn-lg btn-primary btn-block" type="submit"
-                                        style="height: 40px; text-align: center; margin-left: 420px;">DELETE
-                                </button>
-                          </div>
+                            <button class="btn btn-lg btn-primary btn-block" type="submit"
+                                    style="height: 40px; text-align: center; margin-left: 420px;">
+                                DELETE
+                            </button>
                         </form>
-                    </span>
-                </label>
+                    </div>
+                </div>
             </div>
         </ul>
     </div>

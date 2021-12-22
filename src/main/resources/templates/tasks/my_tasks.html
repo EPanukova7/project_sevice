@@ -49,16 +49,16 @@
         <header th:insert="layout :: header"></header>
         <h2 class="pb-2 border-bottom" style="margin-top: 25px">My Tasks</h2>
         <div>
-            <div th:if="${projects.empty}"
+            <div th:if="${projects.isEmpty()}"
                  style="font-size: 25px; color: crimson; text-align: -webkit-center;">
                 Chat is empty right now
             </div>
-            <div th:each="project, tasks : ${projects}" >
+            <div th:each="project : ${projects}" >
                 <h3 th:text="${project.name}" ></h3>
-                <div th:each="task : ${tasks}" style="font-size:17px">
-                    <h4 style="margin-top: 20px">List of tasks:</h4>  <!-- список пуст, тк не добавлено ничего -->
-                    <p th:if="!${project.owner.executingTasks.empty}"
-                       th:each="taskA : ${project.owner.executingTasks}" th:text="${taskA.name}"></p>
+                <h4 style="margin-top: 20px">List of tasks:</h4>  <!-- список пуст, тк не добавлено ничего -->
+                <div th:each="task : ${tasksByProjects.get(project)}" style="font-size:17px">
+                    <a th:href="@{/projects/__${project.id}__/tasks/__${task.id}}"
+                       th:text="${task.name}"></a>
                 </div>
             </div>
 

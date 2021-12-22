@@ -11,12 +11,13 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
+@Table(name = "tasks")
 public class Task {
 
     @Id
     @Getter
     @Setter
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
 
     @Getter
@@ -55,12 +56,10 @@ public class Task {
     @Getter
     @Setter
     @ManyToOne
-    @JoinColumn(name = "owner_id", referencedColumnName = "id", nullable = false)
-    private User owner;
-
-    @Getter
-    @Setter
-    @ManyToOne
     @JoinColumn(name = "status_id", referencedColumnName = "id", nullable = false)
     private TaskStatus status;
+
+    public void addComment(Comment comment){
+        this.comments.add(comment);
+    }
 }

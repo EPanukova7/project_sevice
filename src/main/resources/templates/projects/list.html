@@ -58,11 +58,11 @@
                     </p>
                 </div>
                 <div style="height: 80px">
-                    <label for="name" style="margin-top: 50px; font-size: 22px; color: grey">Put name of new project  </label>
+                    <label for="projectName" style="margin-top: 50px; font-size: 22px; color: grey">Put name of new project</label>
                 </div>
 
                 <div class="navbar" style="display: flex; justify-content: space-between;">
-                    <input class="" type="text"
+                    <input class="" type="text" id="projectName"
                            th:field="*{name}"
                            th:class="${#fields.hasErrors('name')} ? 'field-error'" placeholder=" project name" style="margin-top: 5px; width: 600px; height: 45px"/>
                     <div class="form-actions">

@@ -14,31 +14,37 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.regex.Pattern;
 
 @Controller
 public class UserController {
+    final UserService userService;
+
+    public UserController(UserService userService){
+        this.userService = userService;
+    }
+
+    @GetMapping(value = "/login")
+    public ModelAndView loginGet(@ModelAttribute User user) {
+        return new ModelAndView("users/login");
+    }
+
     @PostMapping(value = "/login")
     public ModelAndView loginPost(@Valid User user, BindingResult result,
                                    HttpServletResponse response) {
-        if (result.hasErrors()) {
-            return new ModelAndView("users/login", "formErrors", result.getAllErrors());
-        }
         if (!Validation.isCorrectEmail(user.getEmail())){
-            System.out.println("Incorrect email");
-            System.out.println(user.getEmail());
             result.addError(new FieldError("user", "email", "Incorrect email"));
-            return new ModelAndView("users/login", "formErrors", result.getAllErrors());
         }
         if (!Validation.isCorrectPassword(user.getPassword())){
             result.addError(new FieldError("user", "password",
                     "Incorrect password format. Length should be between 6 and 64"));
+        }
+        if (result.hasErrors()) {
             return new ModelAndView("users/login", "formErrors", result.getAllErrors());
         }
-        User dbUser = UserService.getByEmail(user.getEmail());
+        User dbUser = userService.getByEmail(user.getEmail());
         // TODO: hash password
         if (dbUser == null) {
-            UserService.create(user);
+            userService.create(user);
             dbUser = user;
         } else if (!dbUser.getPassword().equals(user.getPassword())) {
             result.addError(new FieldError("user", "password", "Wrong password"));
@@ -48,27 +54,6 @@ public class UserController {
         cookie.setMaxAge(3600);
         cookie.setSecure(true);
         response.addCookie(cookie);
-        return new ModelAndView("redirect:/projects", "user", dbUser);
-    }
-
-    @GetMapping(value = "/login")
-    public ModelAndView loginGet(@ModelAttribute User user) {
-        return new ModelAndView("users/login");
-    }
-
-    private static String hashPassword(String password) {
-        // TODO
-        return "";
-    }
-
-    private static boolean isCorrectEmail(String url){
-        String pattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\\\.[A-Za-z0-9-]+)*(\\\\.[A-Za-z]{2,})$";
-        return patternMatches(url, pattern);
-    }
-
-    private static boolean patternMatches(String string, String regexPattern) {
-        return Pattern.compile(regexPattern)
-                .matcher(string)
-                .matches();
+        return new ModelAndView("redirect:/projects");
     }
 }

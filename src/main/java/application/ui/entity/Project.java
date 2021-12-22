@@ -12,12 +12,13 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
+@Table(name = "projects")
 public class Project {
 
     @Id
     @Getter
     @Setter
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
 
     @Getter
@@ -51,4 +52,8 @@ public class Project {
             inverseJoinColumns = { @JoinColumn(name = "user_id", nullable = false) }
     )
     private Set<User> users = new HashSet<>();
+
+    public void addUser(User user){
+        this.users.add(user);
+    }
 }

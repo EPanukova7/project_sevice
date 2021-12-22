@@ -7,11 +7,12 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@Table(name = "comments")
 public class Comment {
     @Id
     @Getter
     @Setter
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
 
     @Getter
@@ -23,7 +24,7 @@ public class Comment {
     @Getter
     @Setter
     @NotNull
-    private String commentText;
+    private String text;
 
     @Getter
     @Setter
