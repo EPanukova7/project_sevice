@@ -48,22 +48,17 @@
     <div layout:fragment="content" class="container">
         <header th:insert="layout :: header"></header>
         <h2 class="pb-2 border-bottom" style="margin-top: 25px">My Tasks</h2>
-        <div class="pb-2 border-bottom" style="display: flex; justify-content: space-between; margin-top: 40px;">
-<!--            <h2 id="name" th:text="${project}"></h2>-->
+        <div>
             <div th:if="${projects.empty}"
-                 style="margin-top: 24px; font-size: 25px; color: crimson; text-align: -webkit-center;">
+                 style="font-size: 25px; color: crimson; text-align: -webkit-center;">
                 Chat is empty right now
             </div>
-            <div class="alert alert-error" style="font-weight: bold; color: darkred;">
-                <p th:text="${error}"></p>
-            </div>
-            <div th:each="project : ${projects}" style="text-align: left; color: lightblue;" >
-                <p th:text="${project.name}" style="font-size: 17px; color: black;"></p>
-                <div th:each="task : ${project.tasks}" style="font-size:17px">
-                    <p>Owner:</p>
-                    <p th:text="${task.executor}"></p>
-                    <p>List of tasks:</p>
-                    <p th:text="${project.owner.executingTasks}"></p>
+            <div th:each="project, tasks : ${projects}" >
+                <h3 th:text="${project.name}" ></h3>
+                <div th:each="task : ${tasks}" style="font-size:17px">
+                    <h4 style="margin-top: 20px">List of tasks:</h4>  <!-- список пуст, тк не добавлено ничего -->
+                    <p th:if="!${project.owner.executingTasks.empty}"
+                       th:each="taskA : ${project.owner.executingTasks}" th:text="${taskA.name}"></p>
                 </div>
             </div>
 

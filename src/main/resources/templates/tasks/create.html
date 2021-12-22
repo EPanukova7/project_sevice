@@ -75,6 +75,7 @@
                            th:class="${#fields.hasErrors('description')} ? 'field-error'" class="form-control" id="floatingPassword" placeholder="  Description of task" style="margin-top: 10px; width: 250px; height: 50px">
                     <label for="description"></label>
                 </div>
+
                 <button class="btn btn-lg btn-primary" type="submit" style="margin-top: 20px; width: 100px; height: 50px;">CREATE</button>
             </form>
             <form th:action="@{/projects/__${project.id}__}">
