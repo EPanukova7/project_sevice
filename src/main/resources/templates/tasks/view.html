@@ -39,6 +39,8 @@
                 font-size: 3.5rem;
             }
         }
+
+
     </style>
 
     <!-- Custom styles for this template -->
@@ -51,9 +53,23 @@
     <div class="modal modal-sheet position-static d-block " style="background: SkyBlue; weight: 350px" tabindex="-1" role="dialog"
          id="modalSheet">
         <h3 class="fw-bold mb-0"id="name" th:text="${task.name}" style="background: white;text-transform: capitalize;"></h3>
-        <div style="height: 250px">
+        <div style="height: 250px; margin-left: 10px; margin-top: 10px" >
             <h6 id="description" th:text="${task.description}"
                 style="margin-top: 15px;margin-left: 10px;text-transform: capitalize;"></h6>
+
+<!--            <h7 class="fw-bold mb-0" style="margin-left: 10px;">Исполнитель</h7>-->
+<!--            <select class="form-select" id="taskOwner" name="taskOwner" style="width: 30%">-->
+<!--                <option th:each="prUser: ${projectUsers}" th:value="${prUser.id}" th:text="${prUser.email}"-->
+<!--                        th:selected="${prUser.id}==${taskOwner.id}"></option>-->
+<!--            </select>-->
+<!--            <h7 class="fw-bold mb-0" style="margin-left: 10px;">Статус</h7>-->
+<!--            <select  class="form-select" id="taskStatus" name="taskStatus" style="width: 30%">-->
+<!--                <option th:each="taskSt: ${taskStatuses}" th:value="${taskSt.id}" th:text="${taskSt.title}"-->
+<!--                        th:selected="${taskSt.id}==${task.status.id}"></option>-->
+<!--            </select>-->
+            <button class="btn btn-lg btn-primary" type="submit"
+                    style="height: 50px; text-align: center; margin-top: 20px">SAVE
+            </button>
         </div>
     </div>
     <form th:action="@{/projects/__${project.id}__}">
@@ -108,7 +124,7 @@
                                 <small th:text="${comment.owner.email}" class="d-block text-muted">
                                     <svg class="bi me-1" width="1em" height="1em"> </svg>
                                 </small>
-                            <div class="form-actions" style="display: flex; justify-content: end">
+                            <div th:if="${comment.owner.email == user.email}" class="form-actions" style="display: flex; justify-content: end">
                                 <button class="btn btn-lg btn-primary btn-block" type="submit"
                                         style="height: 40px; text-align: center; margin-left: 420px;">DELETE
                                 </button>

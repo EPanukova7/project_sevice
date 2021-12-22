@@ -28,10 +28,10 @@ public class TaskService {
 
     public static Task create(Project project, Task task){
         task.setProject(project);
-        return taskRepository.save(task);
+        return taskRepository.save(task);   // ругался на сохранение таксов
     }
 
-    public static ArrayList<Task> getAllByExecutorIdAAndProjectId(Integer executorId, Integer projectId){
-        return taskRepository.findAllByExecutorIdAAndProjectId(executorId, projectId);
+    public static ArrayList<Task> findAllByExecutorIdAndProjectId(Integer executorId, Integer projectId){
+        return taskRepository.findAllByExecutorIdAndProjectId(executorId, projectId);
     }
 }

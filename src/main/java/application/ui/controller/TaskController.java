@@ -5,10 +5,7 @@ import application.ui.entity.Comment;
 import application.ui.entity.Project;
 import application.ui.entity.Task;
 import application.ui.entity.User;
-import application.ui.service.CommentService;
-import application.ui.service.ProjectService;
-import application.ui.service.TaskService;
-import application.ui.service.UserService;
+import application.ui.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.DirectFieldBindingResult;
@@ -69,8 +66,16 @@ public class TaskController {
         User user = UserService.getById(userId);
         params.put("project", project);
         params.put("task", task);
+        params.put("taskStatuses", TaskStatusService.getAllById(task.getStatus().getId()));
         params.put("comments", CommentService.getAllByTaskId(task.getId()));
         return new ModelAndView("tasks/view", params);
+    }
+
+    @PatchMapping("projects/{projectId}/tasks/{taskId}")
+    public ModelAndView changeStatusAndUser(@PathVariable("projectId") Project project,
+                                            @PathVariable("taskId") @Valid Task task,
+                                            @CookieValue(value = "userId", defaultValue = "-1") int userId){
+        return new ModelAndView("redirect:/projects/{projectId}/tasks/{taskId}");
     }
 
     @PostMapping(value = "projects/{projectId}/tasks/{taskId}")
@@ -113,13 +118,14 @@ public class TaskController {
             return new ModelAndView("redirect:login");
         }
         Iterable<Project> projects = ProjectService.getAllByUserId(userId);
+
         HashMap<Integer, ArrayList<Task>> projectsTasksMap = new HashMap<>();
         for (Project project : projects){
-            projectsTasksMap.put(project.getId(), TaskService.getAllByExecutorIdAAndProjectId(userId, project.getId()));
+            projectsTasksMap.put(project.getId(), TaskService.findAllByExecutorIdAndProjectId(userId, project.getId()));
         }
         HashMap<String, Object> params = new HashMap<>();
         params.put("projects", projects);
         params.put("projectsTasksMap", projectsTasksMap);
-        return new ModelAndView("my_tasks", params);
+        return new ModelAndView("tasks/my_tasks", params);
     }
 }

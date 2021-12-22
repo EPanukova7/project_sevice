@@ -51,5 +51,10 @@ public class Task {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "task")
     private List<Comment> comments = new ArrayList<>();
 
+    @Getter
+    @Setter
+    @ManyToOne
+    @JoinColumn(name = "status_id", referencedColumnName = "id", nullable = false)
+    private TaskStatus status;
 
 }
