@@ -67,7 +67,7 @@ public class TaskController {
         params.put("task", task);
         params.put("comments", CommentService.getAllByTaskId(task.getId()));
         params.put("projectUsers", project.getUsers());
-        params.put("taskStatuses", TaskStatusService.getAllById(task.getStatus().getId()));
+        params.put("taskStatuses", TaskStatusService.getAllById(task.getStatus().getId())); // !!!
         params.put("taskOwner", task.getOwner());
         return new ModelAndView("tasks/view", params);
     }
@@ -86,6 +86,7 @@ public class TaskController {
         params.put("user", user1);
         params.put("project", project);
         params.put("task", task);
+        params.put("taskStatuses", TaskStatusService.getAllById(task.getStatus().getId()));
         params.put("comments", CommentService.getAllByTaskId(task.getId()));
         return new ModelAndView("redirect:/projects/{projectId}/tasks/{taskId}", params);
     }
@@ -115,19 +116,19 @@ public class TaskController {
         return new ModelAndView("redirect:/projects/{projectId}/tasks/{taskId}");
     }
 
-    @GetMapping(value = "/my_tasks")
-    public ModelAndView myTasksGet(@CookieValue(value = "userId", defaultValue = "-1") int userId) {
-        if (userId == -1) {
-            return new ModelAndView("redirect:login");
-        }
-        Iterable<Project> projects = ProjectService.getAllByUserId(userId);
-        HashMap<Integer, ArrayList<Task>> projectsTasksMap = new HashMap<>();
-        for (Project project : projects){
-            projectsTasksMap.put(project.getId(), TaskService.getAllByExecutorIdAAndProjectId(userId, project.getId()));
-        }
-        HashMap<String, Object> params = new HashMap<>();
-        params.put("projects", projects);
-        params.put("projectsTasksMap", projectsTasksMap);
-        return new ModelAndView("my_tasks", params);
-    }
+//    @GetMapping(value = "/tasks/my_tasks")
+//    public ModelAndView myTasksGet(@CookieValue(value = "userId", defaultValue = "-1") int userId) {
+//        if (userId == -1) {
+//            return new ModelAndView("redirect:login");
+//        }
+//        Iterable<Project> projects = ProjectService.getAllByUserId(userId);
+//        HashMap<Integer, ArrayList<Task>> projectsTasksMap = new HashMap<>();
+//        for (Project project : projects){
+//            projectsTasksMap.put(project.getId(), TaskService.getAllByExecutorIdAAndProjectId(userId, project.getId()));
+//        }
+//        HashMap<String, Object> params = new HashMap<>();
+//        params.put("projects", projects);
+//        params.put("projectsTasksMap", projectsTasksMap);
+//        return new ModelAndView("tasks/my_tasks", params);
+//    }
 }
