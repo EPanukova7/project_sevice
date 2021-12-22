@@ -45,7 +45,7 @@ public class TaskController {
         if (result.hasErrors()) {
             return new ModelAndView("tasks/create", "formErrors", result.getAllErrors());
         }
-        task = TaskService.create(project, task);
+        task = TaskService.create(project, UserService.getById(userId), TaskStatusService.getById(1), task);
         HashMap<String, Object> params = new HashMap<>();
         params.put("projectId", project.getId());
         params.put("taskId", task.getId());
@@ -67,7 +67,7 @@ public class TaskController {
         params.put("task", task);
         params.put("comments", CommentService.getAllByTaskId(task.getId()));
         params.put("projectUsers", project.getUsers());
-        params.put("taskStatuses", TaskStatusService.getAllById(task.getStatus().getId())); // !!!
+        params.put("taskStatuses", TaskStatusService.getAllById(task.getStatus().getId()));
         params.put("taskOwner", task.getOwner());
         return new ModelAndView("tasks/view", params);
     }

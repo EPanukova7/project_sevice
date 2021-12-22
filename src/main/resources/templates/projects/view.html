@@ -88,6 +88,8 @@
                                             </small>
                                         </span>
                                         <a th:href="@{/projects/__${project.id}__/tasks/__${task.id}__}">Comment</a>
+                                        <div style="text-align: right;"> <p th:object="${owner}" th:text="${owner}" style="font-size: 17px; color: blue; "></p></div>
+<!--                                        <div> <p th:object="${status}" th:text="${status}" style="font-size: 17px; color: blue; "></p></div>-->
                                 </label>
                             </div>
                         </ul>

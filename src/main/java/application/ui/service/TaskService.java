@@ -2,6 +2,7 @@ package application.ui.service;
 
 import application.ui.entity.Project;
 import application.ui.entity.Task;
+import application.ui.entity.TaskStatus;
 import application.ui.entity.User;
 import application.ui.repository.ProjectRepository;
 import application.ui.repository.TaskRepository;
@@ -26,8 +27,10 @@ public class TaskService {
         return taskRepository.findById(id).orElse(null);
     }
 
-    public static Task create(Project project, Task task){
+    public static Task create(Project project, User user, TaskStatus status, Task task){
         task.setProject(project);
+        task.setOwner(user);
+        task.setStatus(status);
         return taskRepository.save(task);
     }
 

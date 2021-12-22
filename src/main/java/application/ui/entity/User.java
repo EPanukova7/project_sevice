@@ -36,11 +36,6 @@ public class User {
 
     @Getter
     @Setter
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "executor")
-    private List<Task> executingTasks = new ArrayList<>();
-
-    @Getter
-    @Setter
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users")
     private Set<Project> projects = new HashSet<>();
 

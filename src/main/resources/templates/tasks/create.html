@@ -50,7 +50,7 @@
 
         <main class="form-signin">
             <form id="taskForm" th:action="@{/projects/__${project.id}__/tasks/create}"
-                  th:object="${task}" method="post" style="display">
+                  th:object="${task}" method="post">
                 <div th:if="${#fields.hasErrors('*')}"
                      class="alert alert-error">
                     <p th:each="error : ${#fields.errors('*')}"
@@ -61,8 +61,8 @@
                 <div class="pb-2 border-bottom" style="display: flex; justify-content: space-between; margin-top: 40px;">
                     <h2>Add new task</h2>
                     <div style="font-size: 20px;font-weight: bold;display: flex;width: 170px;justify-content: space-between;">Code:
-                        <h5 style="margin-top=5px;
-                        font-weight=400;" th:text="${project.code}"></h5></div>
+                        <h5 style="margin-top:5px;
+                        font-weight:400;" th:text="${project.code}"></h5></div>
                 </div>
                 <div class="form-floating">
                     <input type="text"

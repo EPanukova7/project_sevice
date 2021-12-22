@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TaskStatusService {
@@ -23,8 +22,8 @@ public class TaskStatusService {
         return repository.findAll();
     }
 
-    static public Optional<TaskStatus> getById(int id) {
-        return repository.findById(id);
+    static public TaskStatus getById(int id) {
+        return repository.findById(id).orElse(null);
     }
 
     public static Object getAllById(Integer id) {
