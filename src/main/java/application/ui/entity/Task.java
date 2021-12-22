@@ -4,10 +4,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Task {
@@ -43,18 +44,6 @@ public class Task {
 
     @Getter
     @Setter
-    @ManyToOne
-    @JoinColumn(name = "owner_id", referencedColumnName = "id", nullable = false)
-    private User owner;
-
-    @Getter
-    @Setter
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_id", referencedColumnName = "id", nullable = false)
-    private User owner;
-
-    @Getter
-    @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "executor_id", referencedColumnName = "id", nullable = true)
     private User executor;
@@ -65,8 +54,13 @@ public class Task {
 
     @Getter
     @Setter
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @JoinColumn(name = "owner_id", referencedColumnName = "id", nullable = false)
+    private User owner;
+
+    @Getter
+    @Setter
+    @ManyToOne
     @JoinColumn(name = "status_id", referencedColumnName = "id", nullable = false)
     private TaskStatus status;
-
 }

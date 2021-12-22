@@ -2,7 +2,6 @@ package application.ui.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import javax.validation.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -23,7 +22,7 @@ public class User {
     @Getter
     @Setter
     @NotNull
-    public String email;
+    private String email;
 
     @Getter
     @Setter
@@ -37,22 +36,21 @@ public class User {
 
     @Getter
     @Setter
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users")
-    private Set<Project> projects = new HashSet<>();
-
-    @Getter
-    @Setter
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "executor")
     private List<Task> executingTasks = new ArrayList<>();
 
     @Getter
     @Setter
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
-    private Set<Task> tasks = new HashSet<>();
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users")
+    private Set<Project> projects = new HashSet<>();
 
     @Getter
     @Setter
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
     private List<Comment> comments;
 
+    @Getter
+    @Setter
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
+    private Set<Task> tasks = new HashSet<>();
 }

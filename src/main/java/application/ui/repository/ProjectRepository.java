@@ -9,5 +9,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProjectRepository extends CrudRepository<Project, Integer>{
-    Optional<Project> findByCode(String code);
+    Optional <Project> findByCode(String code);
 }

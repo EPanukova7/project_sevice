@@ -32,7 +32,7 @@ public class TaskService {
         return taskRepository.save(task);
     }
 
-    public static ArrayList<Task> getAllByExecutorIdAAndProjectId(Integer executorId, Integer projectId){
-        return taskRepository.findAllByExecutorIdAAndProjectId(executorId, projectId);
-    }
+//    public static Iterable<Task> getAllByExecutorIdAAndProjectId(Integer executorId, Integer projectId){
+//        return taskRepository.findAllByExecutorIdAAndProjectId(executorId, projectId);
+//    }
 }
