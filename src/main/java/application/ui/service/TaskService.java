@@ -5,7 +5,6 @@ import application.ui.repository.CommentRepository;
 import application.ui.repository.TaskRepository;
 import application.ui.repository.TaskStatusRepository;
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -81,8 +80,4 @@ public class TaskService {
         ids.add(status.getId() % statusNames.length + 1);
         return taskStatusRepository.findAllById(ids);
     }
-
-//    public static Iterable<Task> getAllByExecutorIdAAndProjectId(Integer executorId, Integer projectId){
-//        return taskRepository.findAllByExecutorIdAAndProjectId(executorId, projectId);
-//    }
 }

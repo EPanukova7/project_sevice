@@ -1,9 +1,7 @@
 package application.ui.service;
 
-import application.ui.entity.Project;
 import application.ui.entity.User;
 import application.ui.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service

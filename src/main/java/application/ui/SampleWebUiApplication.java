@@ -16,20 +16,10 @@
 
 package application.ui;
 
-import application.ui.entity.Project;
-import application.ui.entity.Task;
-import application.ui.repository.ProjectRepository;
-import application.ui.repository.TaskRepository;
-//import application.ui.service.ProjectService;
-//import application.ui.service.TaskService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.convert.converter.Converter;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 
 @Configuration
